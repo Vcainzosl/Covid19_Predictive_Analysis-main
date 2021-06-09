@@ -2,10 +2,10 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
 
-class Modeling:
-    """Class for predicting values of models and calculate error metrics"""
+class DNNModeling:
+    """Class for predicting values of DNN model and get metrics"""
 
-    def __init__(self, X, t, X_pred, model, mae=True, mse=True):
+    def __init__(self, X, t, X_pred, DNN, mae=True, mse=True):
         """Constructor of class DNNModeling
 
         :param X: matrix with test samples
@@ -21,11 +21,13 @@ class Modeling:
         :param mse: calculate mse metric, defaults to True
         :type mse: bool, optional
         """
-        self.model = model
-        self.predict_model(X, t, X_pred)
+        self.DNN = DNN
+        # Call predict method
+        self.predict_DNN(X, t, X_pred)
+        # Get metrics
         self.get_metrics(t, mae, mse)
 
-    def predict_model(self, X, t, X_pred):
+    def predict_DNN(self, X, t, X_pred):
         """Performs prediction values
 
         :param X: matrix test samples
@@ -35,8 +37,10 @@ class Modeling:
         :param X_pred: matrix future values
         :type X_pred: pandas.DataFrame
         """
-        self.y = self.model.best_model.predict(X)
-        self.y_pred = self.model.best_model.predict(pd.concat([X, X_pred]))
+        # Predict values with labels
+        self.y = self.DNN.predict(X)
+        # Concat future values predictions
+        self.y_pred = self.DNN.predict(pd.concat([X, X_pred]))
 
     def get_metrics(self, t, mae, mse):
         """Calculate error metrics
@@ -48,8 +52,8 @@ class Modeling:
         :param mse: calculate MSE
         :type mse: bool
         """
-        self.metrics = {"Model": self.model.model.model_name}
+        self.metrics = {"Model": "DNN"}
         if mae:
-            self.metrics["MAE"] = mean_absolute_error(t, self.y)
+            self.metrics["MAE"] = mean_absolute_error(t.values, self.y)
         if mse:
-            self.metrics["MSE"] = mean_squared_error(t, self.y)
+            self.metrics["MSE"] = mean_squared_error(t.values, self.y)

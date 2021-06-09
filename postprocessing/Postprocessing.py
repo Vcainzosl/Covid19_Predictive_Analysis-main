@@ -1,9 +1,7 @@
 import sys
 
 sys.path.append(".")
-import pandas as pd
 from mdutils import MdUtils
-import mdutils.tools.Table
 from mdutils.fileutils.fileutils import MarkDownFile
 from mdutils import Html
 from utils.Saving import Saving

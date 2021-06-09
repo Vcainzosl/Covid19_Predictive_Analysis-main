@@ -1,9 +1,5 @@
 from preprocessing.Preprocessing import Preprocessing
 from processing.Processing import Processing
-import pandas as pd
-import os
-from utils.Saving import Saving
-from utils.Optimizing import Optimizing
 from utils.Models import Models
 
 
@@ -12,8 +8,20 @@ def make_preprocessing(
     column_filter: str,
     values: list,
     variable_delete: list,
-    wsize=8,
 ):
+    """Main function to perform preprocessing tasks
+
+    :param url: dataset url
+    :type url: str
+    :param column_filter: column name to filter values
+    :type column_filter: str
+    :param values: values to filter samples
+    :type values: list
+    :param variable_delete: delete variable of the dataset
+    :type variable_delete: list
+    :return: Preprocessing object
+    :rtype: class Preprocessing
+    """
     prp = Preprocessing()
     filepath = prp.download_dataset(url, exist_ok=True)
 
@@ -22,43 +30,82 @@ def make_preprocessing(
     data = prp.eliminate_variables(data, variable_delete, axis=1)
     prp.get_plots(data)
     prp.get_PCA(data)
-    prp.get_ICA(data)
-    prp.get_correlation_matrix(data)
+    # prp.get_ICA(data)
+    # prp.get_correlation_matrix(data)
 
-    return data, prp
-
-
-def slide_data(data, prp: object, wsize, t_label="UCI"):
-    data = prp.window_slide_dataset(data, wsize, wsize - 1)
-    X, t = Preprocessing.split_data(data, t_label)
-    return X, t
+    return prp
 
 
-def make_processing(X, t, windowsize):
+def slide_data(prp: object, wsize, prediction, t_label="Casos"):
+    """Performs data sliding to an specific windowsize and prediction
+
+    :param prp: Preprocesing object
+    :type prp: class Preprocessing
+    :param wsize: number of past samples
+    :type wsize:  int
+    :param prediction: number of future samples
+    :type prediction: int
+    :param t_label: label to predict, defaults to "Casos"
+    :type t_label: str, optional
+    :return: Matrix with samples, array with labels and matrix with samples to predict future values
+    :rtype: pandas.DataFrame, pandas.Series, pandas.DataFrame
+    """
+    X, t, X_pred = prp.window_slide_dataset(wsize, prediction)
+    return X, t, X_pred
+
+
+def make_processing(prp, windowsize):
+    """Main function to perform processing calling specific methods
+
+    :param prp: Preprocessing object
+    :type prp: class Preprocessing
+    :param windowsize: range of windosize
+    :type windowsize: list
+    """
+    # Create object Models
     models = Models()
-    training_results = {}
+    results = {}
+    DNNscores = {}
+    cv = int(input("Número de K-folds: "))
+    trials = int(input("Número de intentos por modelo: "))
+    epochs = int(input("Número de epochs por modelo: "))
     for wsize in windowsize:
-        X, t = slide_data(data, prp, wsize)
-        processing = Processing(X, t, wsize)
-        processing.perform_optimizing_model(
-            models.models, return_train_score=True
-        )
-        training_results[wsize] = processing.perform_training_model(
-            models.models
-        )
-        processing.perform_validation_curve(models.models)
-        processing.perform_plot_predictions(models.models)
+        testing_results = {}
+        # Same values to predict as windowsize
+        for prediction in windowsize:
+            X, t, X_pred = slide_data(prp, wsize, prediction)
+            # Create object Processing
+            processing = Processing(X, t, X_pred, wsize, cv, trials, epochs)
+            # Save DNN training results to plot validation curve
+            DNNscores[str(prediction)] = processing.perform_optimizing_model(
+                models.models,
+                return_train_score=True,
+                scoring="neg_mean_squared_error",
+                n_jobs=-1,
+            )
+            # Save test results for each model to plot windowsize comparison
+            testing_results[str(prediction)] = processing.perform_testing_model(
+                models.models
+            )
+            # Plot mean scores of training for each model
+            processing.perform_validation_models(models.models)
+            # Plot predictions for each model
+            processing.perform_plot_predictions(models.models)
+        # Plot DNN validation curve for each prediction and current windowsize
+        processing.perform_validation_DNN(DNNscores)
+        # Save predictions results for current windowsize
+        results[wsize] = testing_results
     processing.perform_wsize_comparison(
-        training_results, models.models, windowsize
+        results, windowsize, models.models, windowsize
     )
 
 
 if __name__ == "__main__":
-    data, prp = make_preprocessing(
+    prp = make_preprocessing(
         "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/provincias_covid19_datos_sanidad_nueva_serie.csv",
         "provincia",
         ["A Coruña", "Lugo", "Ourense", "Pontevedra"],
         ["cod_ine"],
     )
 
-    make_processing(data, prp, [2, 3, 4])
+    make_processing(prp, [1, 7, 14])

@@ -22,11 +22,26 @@ class Preprocessing(Saving):
         pickle=False,
         input_folder="Datasets",
     ):
+        """Contructor of Preprocessing class
+
+        :param base_dir: base directory, defaults to "."
+        :type base_dir: str, optional
+        :param csv: create csv folder, defaults to True
+        :type csv: bool, optional
+        :param img: create img folder, defaults to True
+        :type img: bool, optional
+        :param pickle: create pickle folder, defaults to False
+        :type pickle: bool, optional
+        :param input_folder: input folder to save base Dataset, defaults to "Datasets"
+        :type input_folder: str, optional
+        """
+        # Inheritance of Saving class
         super().__init__(base_dir=base_dir, csv=csv, img=img, pickle=pickle)
         self.input_folder = input_folder
         self.input_dir = self.base_dir + os.path.sep + self.input_folder
 
     def download_dataset(self, url: str, **kwargs) -> str:
+
         """Performs downloading datasets from url sources, creating and saving in respective directory
 
         :param url: imformation source domain name server
@@ -51,23 +66,23 @@ class Preprocessing(Saving):
         self,
         filepath: str,
         filename="Original Data",
+        save=True,
         **kwargs,
     ) -> pd.DataFrame:
-        """Reads dataset from .csv file
+        """Reads Dataset from csv file
 
-        :param filepath: dataset path
+        :param filepath: path of the csv file
         :type filepath: str
-        :param header: insert DataFrame header 1 does 0 not, defaults to 0
-        :type header: int, optional
-        :param index_col: insert index column 1 does 0 not, defaults to 0
-        :type index_col: int, optional
-        :param filename: name of the original DataSet .csv file
-        :type filename: str
-        :return: dataset rendered to DataFrame
+        :param filename: name of the new csv file, defaults to "Original Data"
+        :type filename: str, optional
+        :param save: save the new file, defaults to True
+        :type save: bool, optional
+        :return: dataset read
         :rtype: pd.DataFrame
         """
         data = pd.read_csv(filepath, **kwargs)
-        self.save_csv(data.head().to_csv(), filename)
+        if save:
+            self.save_csv(data.head().to_csv(), filename)
         return data
 
     def filter_by_names(
@@ -76,6 +91,7 @@ class Preprocessing(Saving):
         column: str,
         values: list,
         filename="Filter Data",
+        save=False,
         **kwargs,
     ) -> pd.DataFrame:
         """Filter dataset samples by names in columns
@@ -88,12 +104,15 @@ class Preprocessing(Saving):
         :type values: list
         :param filename: name of the DataSet filtered .csv file
         :type filename: str
+        :param save: save the new file, defaults to False
+        :type save: bool, optional
         :return: DataSet filtered
         :rtype: pd.DataFrame
         """
         data = data[data[column].isin(values)]
         data = data.groupby(data.index.name, **kwargs)[data.columns].sum()
-        self.save_csv(data.head().to_csv(), filename)
+        if save:
+            self.save_csv(data.head().to_csv(), filename)
         return data
 
     def eliminate_variables(
@@ -101,90 +120,141 @@ class Preprocessing(Saving):
         data: pd.DataFrame,
         columns: list,
         filename="Elimination Data",
+        save=False,
         **kwargs,
     ) -> pd.DataFrame:
         """delete those columns in DataSet unwanted
 
         :param data: Dataset with samples
         :type data: pd.DataFrame
-        :param column: names of variables to delete
-        :type column: list
+        :param columns: names of variables to delete
+        :type columns: list
         :param filename: name of the DataSet after elimination .csv file
         :type filename: str
+        :param save: save the new file, defaults to False
+        :type save: bool, optional
         :return: Dataset clean of undesired features
         :rtype: pd.DataFrame
         """
         data = data.drop(columns, **kwargs)
-        self.save_csv(data.head().to_csv(), filename)
+        if save:
+            self.save_csv(data.head().to_csv(), filename)
+        # Save cleaned dataset as instance attribute
+        self.dataset = data
         return data
 
     def window_slide_dataset(
         self,
-        data: pd.DataFrame,
-        bucket_size: int,
-        overlap_count: int,
+        window,
+        prediction,
+        label="Casos",
         wrapper_class=WindowData,
         filename="Slided Data",
+        save=False,
         **kwargs,
     ) -> pd.DataFrame:
-        """runs sliding window with overlapping on DataSet values
-        :param data: dataset with sample
-        :type data: pd.DataFrame
-        :param bucket_size: window size, number of samples taking into the window
-        :type bucket_size: int
-        :param overlap_count: number of previous window elements considered in the next step, must be lesser than bucket_size
-        :type overlap_count: int
-        :param filename: name of the DataSet slided .csv file
-        :type filename: str
-        :return: Forecasting DataFrame from time series
-        :rtype: pd.DataFrame
+        """Runs sliding window with overlapping on DataSet values
+
+        :param window: number of past samples (from today)
+        :type window: int
+        :param prediction: number of future sample
+        :type prediction: int
+        :param label: label to predict, defaults to "Casos"
+        :type label: str, optional
+        :param wrapper_class: wrapper class to build new slided dataset, defaults to WindowData
+        :type wrapper_class: Class, optional
+        :param filename: name of the new file, defaults to "Slided Data"
+        :type filename: str, optional
+        :param save: save new csv file, defaults to False
+        :type save: bool, optional
+        :return: matrix with samples, array with labels and matrix with samples to predict new values
+        :rtype: pandas.DataFrame, pandas.Series, pandas.DataFrame
         """
 
-        feature_values = data.T.values
-        bucket_size = bucket_size
-        overlap_count = overlap_count
+        window = window
+        prediction = prediction
+        bucket_size = window + prediction + 1
+        overlap_count = bucket_size - 1
 
         samples = []
         columns = []
-        for name in data.columns:
-            for i in range(overlap_count):
-                columns.append(name + "_t-" + str(overlap_count - i))
-            columns.append(name)
+        # Use each variable of dataset
+        for name in self.dataset.columns:
+            for i in range(bucket_size):
+                # Past samples
+                if i < window:
+                    columns.append(name + "_t" + str(i - window))
+                # Current sample
+                elif i == window:
+                    columns.append(name)
+                # Future samples
+                elif i > window:
+                    columns.append(name + "_t+" + str(i - window))
 
-        slider = Slider(bucket_size, overlap_count, wrapper_class)
-        slider.fit(feature_values)
+        slider = Slider(bucket_size, overlap_count, WindowData)
+        # Using dataset trapose
+        slider.fit(self.dataset.T.values)
         while True:
             window_data = slider.slide()
             if slider.reached_end_of_list():
                 break
             samples.append(window_data.build_sample())
-        data = pd.DataFrame(
+
+        # Completed data slided
+        Data = pd.DataFrame(
             samples,
             columns=columns,
-            index=data.T.columns[bucket_size - 1 :],
-            **kwargs,
+            index=self.dataset.T.columns[bucket_size - 1 :],
         )
-        self.save_csv(
-            data.head().to_csv(),
-            filename + "-windowsize=" + str(bucket_size),
-        )
-        return data
+        # Data for target label
+        Mlabel = Data[[column for column in Data.columns if (label in column)]]
+        # Values without labels to predict
+        l = Mlabel[-1:].values[0]
+        rows = []
+        bucket_size = window + 1
+        overlap_count = bucket_size - 1
+        slider = Slider(bucket_size, overlap_count)
+        # Slide values
+        slider.fit(l.T)
+        while True:
+            window_data = slider.slide()
+            rows.append(window_data)
+            if slider.reached_end_of_list():
+                break
+        xcol = [
+            column
+            for column in Data.columns
+            if ("+" not in column) & (label in column)
+        ]
 
-    @staticmethod
-    def split_data(data: pd.DataFrame, t_label: str, axis=1, **kwargs):
-        t = data[t_label]
-        X = data.drop(t_label, axis=axis, **kwargs)
+        # Samples to predict output values, data without labels to train for
+        predict = pd.DataFrame(rows, columns=xcol).iloc[1:-1]
+        ind = [
+            pd.to_datetime(Mlabel[-1:].index)[0] + pd.Timedelta(days=i)
+            for i in predict.index
+        ]
+        predict = predict.set_index([ind])
 
-        return X, t
+        # Matrix of samples, array of labels and matrix of samples to predict (without labels)
+        X = Data[xcol]
+        t = Data[label + "_t+" + str(prediction)]
+        return X, t, predict
 
-    def get_plots(self, data: pd.DataFrame):
+    def get_plots(self, data: pd.DataFrame, filename="Distribution Data"):
+        """Plot original data distibutions
+
+        :param data: original dataset
+        :type data: pandas.DataFrame
+        :param filename: name of img file, defaults to "Distribution Data"
+        :type filename: str, optional
+        """
         fig = plt.figure(len(data.columns), figsize=(10, 5))
         ind = pd.to_datetime(data.index.tolist())
         plt.plot(ind[:], data.iloc[:, 0].values)
         plt.title(data.columns[0])
         plt.legend([data.columns[0]], loc="upper right")
         plt.tight_layout()
-        self.save_img(plt, "Distribution Data")
+        self.save_img(plt, filename)
 
         for i in range(len(data.columns) - 1):
             plt.clf()
@@ -192,16 +262,24 @@ class Preprocessing(Saving):
             plt.title(data.columns[i + 1])
             plt.legend([data.columns[i + 1]], loc="upper right")
             plt.tight_layout()
-            self.save_img(plt, "Distribution Data(" + str(i + 1) + ")")
+            # Save each plot as img file
+            self.save_img(plt, filename + "(" + str(i + 1) + ")")
         plt.close()
 
-    def get_correlation_matrix(self, X):
+    def get_correlation_matrix(self, X, filename="Correlation matrix"):
+        """Method to get correlation matrix
+
+        :param X: matrix with inputs values (variables)
+        :type X: pandas.DataFrame
+        :param filename: name of the img file, defaults to "Correlation matrix"
+        :type filename: str, optional
+        """
         samples, nvar = X.shape
         plt.figure(figsize=(7, 6))
-        # Matriz de correlación usando las primeras 30 variables
+        # Correlation matrix using all variables
         corr_mat = np.corrcoef(np.c_[X].T)
         etiquetas = X.columns.values.tolist()
-        # Mapa de calor sobre las variables de la matriz de correlación
+        # Heat map over correlation matrix variables
         sns.heatmap(
             corr_mat,
             vmin=-1,
@@ -213,10 +291,17 @@ class Preprocessing(Saving):
             yticklabels=etiquetas,
         )
         plt.tight_layout()
-        self.save_img(plt, "Correlation matrix")
+        self.save_img(plt, filename)
         plt.close()
 
-    def get_PCA(self, X, **kwargs):
+    def get_PCA(self, X, filename="PCA analisys", **kwargs):
+        """Performs PCA analysis
+
+        :param X: matrix with input variables
+        :type X: pandas.DataFrame
+        :param filename: name of img file, defaults to "PCA analisys"
+        :type filename: str, optional
+        """
         samples, nvar = X.shape
         pca = PCA(**kwargs)
         pca.fit(X)
@@ -233,30 +318,5 @@ class Preprocessing(Saving):
         plt.xlabel("Componentes principales")
         plt.ylabel("% de varianza explicada")
         plt.tight_layout()
-        self.save_img(plt, "PCA analisys")
-        plt.close()
-
-    def get_ICA(self, X, **kwargs):
-        ica = FastICA(**kwargs)
-        comp = ica.fit_transform(X)
-        f, c = X.shape
-        ind = pd.to_datetime(X.index.tolist())
-        fig = plt.figure(figsize=(10, 5))
-        ind = pd.to_datetime(X.index.tolist())
-        plt.plot(ind[:], X.values)
-        plt.title("Conjunto de variables")
-        plt.legend(X.columns, loc="upper right")
-
-        plt.tight_layout()
-
-        self.save_img(plt, "ICA Analisys")
-
-        fig = plt.figure(figsize=(10, 5))
-        ind = pd.to_datetime(X.index.tolist())
-        for i in range(len(comp[0])):
-            plt.plot(ind[:], comp[:, i], label="IC" + str(i + 1))
-        plt.title("Componentes independientes")
-        plt.legend(loc="upper right")
-        plt.tight_layout()
-        self.save_img(plt, "ICA Analisys" + "(" + str(1) + ")")
+        self.save_img(plt, filename)
         plt.close()

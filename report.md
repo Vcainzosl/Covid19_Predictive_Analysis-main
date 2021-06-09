@@ -6,34 +6,27 @@ Contents
 ========
 
 * [Original Data](#original-data)
-* [Filter Data](#filter-data)
-* [Elimination Data](#elimination-data)
-* [Slided Data *(windowsize=2)*](#slided-data-windowsize2)
-* [Optimization Linear Regression *(windowsize=2)*](#optimization-linear-regression-windowsize2)
-* [Best hyperparameters Linear Regression *(windowsize=2)*](#best-hyperparameters-linear-regression-windowsize2)
-* [Metrics evaluation Linear Regression *(windowsize=2)*](#metrics-evaluation-linear-regression-windowsize2)
-* [Slided Data *(windowsize=3)*](#slided-data-windowsize3)
-* [Optimization Linear Regression *(windowsize=3)*](#optimization-linear-regression-windowsize3)
-* [Best hyperparameters Linear Regression *(windowsize=3)*](#best-hyperparameters-linear-regression-windowsize3)
-* [Metrics evaluation Linear Regression *(windowsize=3)*](#metrics-evaluation-linear-regression-windowsize3)
-* [Slided Data *(windowsize=4)*](#slided-data-windowsize4)
-* [Optimization Linear Regression *(windowsize=4)*](#optimization-linear-regression-windowsize4)
-* [Best hyperparameters Linear Regression *(windowsize=4)*](#best-hyperparameters-linear-regression-windowsize4)
-* [Metrics evaluation Linear Regression *(windowsize=4)*](#metrics-evaluation-linear-regression-windowsize4)
+* [Best hyperparameters *(windowsize_1, Casos_t+1)*](#best-hyperparameters-windowsize_1-casos_t1)
+* [Metrics evaluation *(windowsize_1, Casos_t+1)*](#metrics-evaluation-windowsize_1-casos_t1)
+* [Best hyperparameters *(windowsize_1, Casos_t+7)*](#best-hyperparameters-windowsize_1-casos_t7)
+* [Metrics evaluation *(windowsize_1, Casos_t+7)*](#metrics-evaluation-windowsize_1-casos_t7)
+* [Best hyperparameters *(windowsize_1, Casos_t+14)*](#best-hyperparameters-windowsize_1-casos_t14)
+* [Metrics evaluation *(windowsize_1, Casos_t+14)*](#metrics-evaluation-windowsize_1-casos_t14)
+* [Best hyperparameters *(windowsize_7, Casos_t+1)*](#best-hyperparameters-windowsize_7-casos_t1)
+* [Metrics evaluation *(windowsize_7, Casos_t+1)*](#metrics-evaluation-windowsize_7-casos_t1)
+* [Best hyperparameters *(windowsize_7, Casos_t+7)*](#best-hyperparameters-windowsize_7-casos_t7)
+* [Metrics evaluation *(windowsize_7, Casos_t+7)*](#metrics-evaluation-windowsize_7-casos_t7)
+* [Best hyperparameters *(windowsize_7, Casos_t+14)*](#best-hyperparameters-windowsize_7-casos_t14)
+* [Metrics evaluation *(windowsize_7, Casos_t+14)*](#metrics-evaluation-windowsize_7-casos_t14)
+* [Best hyperparameters *(windowsize_14, Casos_t+1)*](#best-hyperparameters-windowsize_14-casos_t1)
+* [Metrics evaluation *(windowsize_14, Casos_t+1)*](#metrics-evaluation-windowsize_14-casos_t1)
+* [Best hyperparameters *(windowsize_14, Casos_t+7)*](#best-hyperparameters-windowsize_14-casos_t7)
+* [Metrics evaluation *(windowsize_14, Casos_t+7)*](#metrics-evaluation-windowsize_14-casos_t7)
+* [Best hyperparameters *(windowsize_14, Casos_t+14)*](#best-hyperparameters-windowsize_14-casos_t14)
+* [Metrics evaluation *(windowsize_14, Casos_t+14)*](#metrics-evaluation-windowsize_14-casos_t14)
 * [Distribution Data](#distribution-data)
 * [PCA analisys](#pca-analisys)
-* [ICA Analisys](#ica-analisys)
-* [Correlation matrix](#correlation-matrix)
-* [Validation curve Linear Regression *(fit_intercept, windowsize=2)*](#validation-curve-linear-regression-fit_intercept-windowsize2)
-* [Validation curve Linear Regression *(normalize, windowsize=2)*](#validation-curve-linear-regression-normalize-windowsize2)
-* [Prediction Linear Regression *(UCI, windowsize=2)*](#prediction-linear-regression-uci-windowsize2)
-* [Validation curve Linear Regression *(fit_intercept, windowsize=3)*](#validation-curve-linear-regression-fit_intercept-windowsize3)
-* [Validation curve Linear Regression *(normalize, windowsize=3)*](#validation-curve-linear-regression-normalize-windowsize3)
-* [Prediction Linear Regression *(UCI, windowsize=3)*](#prediction-linear-regression-uci-windowsize3)
-* [Validation curve Linear Regression *(fit_intercept, windowsize=4)*](#validation-curve-linear-regression-fit_intercept-windowsize4)
-* [Validation curve Linear Regression *(normalize, windowsize=4)*](#validation-curve-linear-regression-normalize-windowsize4)
-* [Prediction Linear Regression *(UCI, windowsize=4)*](#prediction-linear-regression-uci-windowsize4)
-* [Windowsize comparison Linear Regression](#windowsize-comparison-linear-regression)
+* [Validation curve, windowsize_1, Casos_t+1](#validation-curve-windowsize_1-casos_t1)
   
 <div style="page-break-after: always;"></div>  
     
@@ -55,314 +48,325 @@ Contents
 <div style="page-break-after: always;"></div>  
     
   
-# Filter Data
+# Best hyperparameters *(windowsize_1, Casos_t+1)*
 
 
   
 
-|Fecha|cod_ine|Casos|Fallecidos|Hospitalizados|UCI|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|2020-01-01|110|0|0|1|0|
-|2020-01-02|110|0|0|0|0|
-|2020-01-03|110|0|0|0|0|
-|2020-01-04|110|0|0|0|0|
-|2020-01-05|110|0|0|0|0|
-  
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Elimination Data
-
-
-  
-
-|Fecha|Casos|Fallecidos|Hospitalizados|UCI|
-| :---: | :---: | :---: | :---: | :---: |
-|2020-01-01|0|0|1|0|
-|2020-01-02|0|0|0|0|
-|2020-01-03|0|0|0|0|
-|2020-01-04|0|0|0|0|
-|2020-01-05|0|0|0|0|
-  
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Slided Data *(windowsize=2)*
-
-
-  
-
-|Fecha|Casos_t-1|Casos|Fallecidos_t-1|Fallecidos|Hospitalizados_t-1|Hospitalizados|
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|2020-01-02|0|0|0|0|1|0|
-|2020-01-03|0|0|0|0|0|0|
-|2020-01-04|0|0|0|0|0|0|
-|2020-01-05|0|0|0|0|0|0|
-|2020-01-06|0|0|0|0|0|0|
+|Linear Regression|True|False|-|-|-|-|
+|SVR|-|-|0.0001|sigmoid|-|-|
+|DNN|-|-|-|-|7.0|[16, 11, 13, 16, 10, 18, 1]|
 <br>  
 
-|UCI_t-1|UCI|
-| :---: | :---: |
-|0|0|
-|0|0|
-|0|0|
-|0|0|
-|0|0|
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Optimization Linear Regression *(windowsize=2)*
-
-
-  
-
-|mean_fit_time|std_fit_time|mean_score_time|std_score_time|param_normalize|param_fit_intercept|params|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0.0032|0.0004|0.0022|0.0004|True|True|{'normalize': 'True', 'fit_intercept': 'True'}|
-|0.0032|0.0004|0.002|0.0|False|True|{'normalize': 'False', 'fit_intercept': 'True'}|
-|0.003|0.0|0.0016|0.0005|True|False|{'normalize': 'True', 'fit_intercept': 'False'}|
-|0.0028|0.0007|0.0024|0.0008|False|False|{'normalize': 'False', 'fit_intercept': 'False'}|
-<br>  
-
-|split0_test_score|split1_test_score|split2_test_score|split3_test_score|split4_test_score|mean_test_score|std_test_score|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0.7807|0.8211|0.0649|0.4123|0.6399|0.5438|0.2789|
-|0.7807|0.8211|0.0649|0.4123|0.6399|0.5438|0.2789|
-|0.7807|0.8211|0.0649|0.4123|0.6399|0.5438|0.2789|
-|0.7807|0.8211|0.0649|0.4123|0.6399|0.5438|0.2789|
-<br>  
-
-|rank_test_score|split0_train_score|split1_train_score|split2_train_score|split3_train_score|split4_train_score|mean_train_score|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|1|0.843|0.851|0.8429|0.8846|0.8512|0.8545|
-|1|0.843|0.851|0.8429|0.8846|0.8512|0.8545|
-|1|0.843|0.851|0.8429|0.8846|0.8512|0.8545|
-|1|0.843|0.851|0.8429|0.8846|0.8512|0.8545|
-<br>  
-
-|std_train_score|
-| :---: |
-|0.0155|
-|0.0155|
-|0.0155|
-|0.0155|
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Best hyperparameters Linear Regression *(windowsize=2)*
-
-
-  
-
-|Model|normalize|fit_intercept|
+|activation|optimizer|lr|
 | :---: | :---: | :---: |
-|Linear Regression|True|True|
-  
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'relu', 'relu', 'relu', 'linear']|Adam|0.001|
   
 <div style="page-break-after: always;"></div>  
     
   
-# Metrics evaluation Linear Regression *(windowsize=2)*
+# Metrics evaluation *(windowsize_1, Casos_t+1)*
 
 
   
 
 |Model|MAE|MSE|
 | :---: | :---: | :---: |
-|Linear Regression|2.5634|14.2279|
+|Linear Regression|30.9221|1522.1434|
+|SVR|41.3421|2741.6554|
+|DNN|30.7089|1499.0334|
   
   
 <div style="page-break-after: always;"></div>  
     
   
-# Slided Data *(windowsize=3)*
+# Best hyperparameters *(windowsize_1, Casos_t+7)*
 
 
   
 
-|Fecha|Casos_t-2|Casos_t-1|Casos|Fallecidos_t-2|Fallecidos_t-1|Fallecidos|
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|2020-01-03|0|0|0|0|0|0|
-|2020-01-04|0|0|0|0|0|0|
-|2020-01-05|0|0|0|0|0|0|
-|2020-01-06|0|0|0|0|0|0|
-|2020-01-07|0|0|0|0|0|0|
+|Linear Regression|True|False|-|-|-|-|
+|SVR|-|-|0.0008|poly|-|-|
+|DNN|-|-|-|-|6.0|[10, 14, 12, 14, 14, 1]|
 <br>  
 
-|Hospitalizados_t-2|Hospitalizados_t-1|Hospitalizados|UCI_t-2|UCI_t-1|UCI|
-| :---: | :---: | :---: | :---: | :---: | :---: |
-|1|0|0|0|0|0|
-|0|0|0|0|0|0|
-|0|0|0|0|0|0|
-|0|0|0|0|0|0|
-|0|0|0|0|0|0|
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Optimization Linear Regression *(windowsize=3)*
-
-
-  
-
-|mean_fit_time|std_fit_time|mean_score_time|std_score_time|param_normalize|param_fit_intercept|params|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0.0034|0.0005|0.002|0.0|True|True|{'normalize': 'True', 'fit_intercept': 'True'}|
-|0.003|0.0006|0.002|0.0|False|True|{'normalize': 'False', 'fit_intercept': 'True'}|
-|0.0048|0.0016|0.0034|0.0008|True|False|{'normalize': 'True', 'fit_intercept': 'False'}|
-|0.0036|0.0008|0.0026|0.0008|False|False|{'normalize': 'False', 'fit_intercept': 'False'}|
-<br>  
-
-|split0_test_score|split1_test_score|split2_test_score|split3_test_score|split4_test_score|mean_test_score|std_test_score|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0.7497|0.7528|0.0087|0.2808|0.617|0.4818|0.2925|
-|0.7497|0.7528|0.0087|0.2808|0.617|0.4818|0.2925|
-|0.7497|0.7528|0.0087|0.2808|0.617|0.4818|0.2925|
-|0.7497|0.7528|0.0087|0.2808|0.617|0.4818|0.2925|
-<br>  
-
-|rank_test_score|split0_train_score|split1_train_score|split2_train_score|split3_train_score|split4_train_score|mean_train_score|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|1|0.8458|0.8542|0.8436|0.8897|0.8538|0.8574|
-|1|0.8458|0.8542|0.8436|0.8897|0.8538|0.8574|
-|1|0.8458|0.8542|0.8436|0.8897|0.8538|0.8574|
-|1|0.8458|0.8542|0.8436|0.8897|0.8538|0.8574|
-<br>  
-
-|std_train_score|
-| :---: |
-|0.0167|
-|0.0167|
-|0.0167|
-|0.0167|
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Best hyperparameters Linear Regression *(windowsize=3)*
-
-
-  
-
-|Model|normalize|fit_intercept|
+|activation|optimizer|lr|
 | :---: | :---: | :---: |
-|Linear Regression|True|True|
-  
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'relu', 'relu', 'linear']|Adam|0.001|
   
 <div style="page-break-after: always;"></div>  
     
   
-# Metrics evaluation Linear Regression *(windowsize=3)*
+# Metrics evaluation *(windowsize_1, Casos_t+7)*
 
 
   
 
 |Model|MAE|MSE|
 | :---: | :---: | :---: |
-|Linear Regression|2.5579|14.2907|
+|Linear Regression|44.3529|2982.0234|
+|SVR|41.5371|2809.3107|
+|DNN|37.795|2076.9354|
   
   
 <div style="page-break-after: always;"></div>  
     
   
-# Slided Data *(windowsize=4)*
+# Best hyperparameters *(windowsize_1, Casos_t+14)*
 
 
   
 
-|Fecha|Casos_t-3|Casos_t-2|Casos_t-1|Casos|Fallecidos_t-3|Fallecidos_t-2|
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|2020-01-04|0|0|0|0|0|0|
-|2020-01-05|0|0|0|0|0|0|
-|2020-01-06|0|0|0|0|0|0|
-|2020-01-07|0|0|0|0|0|0|
-|2020-01-08|0|0|0|0|0|0|
+|Linear Regression|True|True|-|-|-|-|
+|SVR|-|-|0.0339|poly|-|-|
+|DNN|-|-|-|-|3.0|[10, 12, 1]|
 <br>  
 
-|Fallecidos_t-1|Fallecidos|Hospitalizados_t-3|Hospitalizados_t-2|Hospitalizados_t-1|Hospitalizados|UCI_t-3|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0|0|1|0|0|0|0|
-|0|0|0|0|0|0|0|
-|0|0|0|0|0|0|0|
-|0|0|0|0|0|0|0|
-|0|0|0|0|0|1|0|
-<br>  
-
-|UCI_t-2|UCI_t-1|UCI|
+|activation|optimizer|lr|
 | :---: | :---: | :---: |
-|0|0|0|
-|0|0|0|
-|0|0|0|
-|0|0|0|
-|0|0|0|
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'linear']|Adam|0.001|
   
 <div style="page-break-after: always;"></div>  
     
   
-# Optimization Linear Regression *(windowsize=4)*
-
-
-  
-
-|mean_fit_time|std_fit_time|mean_score_time|std_score_time|param_normalize|param_fit_intercept|params|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0.0034|0.0005|0.002|0.0|True|True|{'normalize': 'True', 'fit_intercept': 'True'}|
-|0.0032|0.0004|0.0018|0.0004|False|True|{'normalize': 'False', 'fit_intercept': 'True'}|
-|0.0032|0.0004|0.002|0.0|True|False|{'normalize': 'True', 'fit_intercept': 'False'}|
-|0.003|0.0|0.002|0.0|False|False|{'normalize': 'False', 'fit_intercept': 'False'}|
-<br>  
-
-|split0_test_score|split1_test_score|split2_test_score|split3_test_score|split4_test_score|mean_test_score|std_test_score|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|0.7277|0.7939|0.0643|0.2496|0.593|0.4857|0.2823|
-|0.7277|0.7939|0.0643|0.2496|0.593|0.4857|0.2823|
-|0.7277|0.7939|0.0643|0.2496|0.593|0.4857|0.2823|
-|0.7277|0.7939|0.0643|0.2496|0.593|0.4857|0.2823|
-<br>  
-
-|rank_test_score|split0_train_score|split1_train_score|split2_train_score|split3_train_score|split4_train_score|mean_train_score|
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-|1|0.8531|0.8572|0.8497|0.8956|0.8608|0.8633|
-|1|0.8531|0.8572|0.8497|0.8956|0.8608|0.8633|
-|1|0.8531|0.8572|0.8497|0.8956|0.8608|0.8633|
-|1|0.8531|0.8572|0.8497|0.8956|0.8608|0.8633|
-<br>  
-
-|std_train_score|
-| :---: |
-|0.0166|
-|0.0166|
-|0.0166|
-|0.0166|
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Best hyperparameters Linear Regression *(windowsize=4)*
-
-
-  
-
-|Model|normalize|fit_intercept|
-| :---: | :---: | :---: |
-|Linear Regression|True|True|
-  
-  
-<div style="page-break-after: always;"></div>  
-    
-  
-# Metrics evaluation Linear Regression *(windowsize=4)*
+# Metrics evaluation *(windowsize_1, Casos_t+14)*
 
 
   
 
 |Model|MAE|MSE|
 | :---: | :---: | :---: |
-|Linear Regression|2.4524|12.3391|
+|Linear Regression|72.0406|7859.3332|
+|SVR|38.695|2375.9279|
+|DNN|76.8269|7701.0046|
+  
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Best hyperparameters *(windowsize_7, Casos_t+1)*
+
+
+  
+
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|Linear Regression|True|False|-|-|-|-|
+|SVR|-|-|0.0002|sigmoid|-|-|
+|DNN|-|-|-|-|5.0|[18, 18, 15, 19, 1]|
+<br>  
+
+|activation|optimizer|lr|
+| :---: | :---: | :---: |
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'relu', 'linear']|Adam|0.001|
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Metrics evaluation *(windowsize_7, Casos_t+1)*
+
+
+  
+
+|Model|MAE|MSE|
+| :---: | :---: | :---: |
+|Linear Regression|28.1061|1218.2048|
+|SVR|41.5867|2815.6744|
+|DNN|36.1511|2176.217|
+  
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Best hyperparameters *(windowsize_7, Casos_t+7)*
+
+
+  
+
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|Linear Regression|False|True|-|-|-|-|
+|SVR|-|-|0.1598|rbf|-|-|
+|DNN|-|-|-|-|6.0|[16, 19, 15, 11, 10, 1]|
+<br>  
+
+|activation|optimizer|lr|
+| :---: | :---: | :---: |
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'relu', 'relu', 'linear']|Adam|0.001|
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Metrics evaluation *(windowsize_7, Casos_t+7)*
+
+
+  
+
+|Model|MAE|MSE|
+| :---: | :---: | :---: |
+|Linear Regression|42.0842|2746.1027|
+|SVR|43.0746|3057.1872|
+|DNN|41.5956|3154.5466|
+  
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Best hyperparameters *(windowsize_7, Casos_t+14)*
+
+
+  
+
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|Linear Regression|True|True|-|-|-|-|
+|SVR|-|-|0.2126|sigmoid|-|-|
+|DNN|-|-|-|-|7.0|[18, 16, 20, 12, 13, 20, 1]|
+<br>  
+
+|activation|optimizer|lr|
+| :---: | :---: | :---: |
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'relu', 'relu', 'relu', 'linear']|Adam|0.001|
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Metrics evaluation *(windowsize_7, Casos_t+14)*
+
+
+  
+
+|Model|MAE|MSE|
+| :---: | :---: | :---: |
+|Linear Regression|58.487|5226.9936|
+|SVR|52.1441|4292.549|
+|DNN|49.2168|4364.1806|
+  
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Best hyperparameters *(windowsize_14, Casos_t+1)*
+
+
+  
+
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|Linear Regression|False|True|-|-|-|-|
+|SVR|-|-|0.021|sigmoid|-|-|
+|DNN|-|-|-|-|7.0|[12, 16, 16, 10, 12, 20, 1]|
+<br>  
+
+|activation|optimizer|lr|
+| :---: | :---: | :---: |
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'relu', 'relu', 'relu', 'linear']|Adam|0.001|
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Metrics evaluation *(windowsize_14, Casos_t+1)*
+
+
+  
+
+|Model|MAE|MSE|
+| :---: | :---: | :---: |
+|Linear Regression|27.2153|1142.8419|
+|SVR|44.3037|3196.3455|
+|DNN|44.1906|2742.4465|
+  
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Best hyperparameters *(windowsize_14, Casos_t+7)*
+
+
+  
+
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|Linear Regression|False|False|-|-|-|-|
+|SVR|-|-|0.0004|sigmoid|-|-|
+|DNN|-|-|-|-|3.0|[18, 18, 1]|
+<br>  
+
+|activation|optimizer|lr|
+| :---: | :---: | :---: |
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'linear']|Adam|0.001|
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Metrics evaluation *(windowsize_14, Casos_t+7)*
+
+
+  
+
+|Model|MAE|MSE|
+| :---: | :---: | :---: |
+|Linear Regression|50.3871|3721.3793|
+|SVR|51.7307|4270.215|
+|DNN|46.921|3897.4505|
+  
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Best hyperparameters *(windowsize_14, Casos_t+14)*
+
+
+  
+
+|Model|normalize|fit_intercept|C|kernel|layers|neurons|
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+|Linear Regression|False|False|-|-|-|-|
+|SVR|-|-|1.268|poly|-|-|
+|DNN|-|-|-|-|4.0|[19, 14, 13, 1]|
+<br>  
+
+|activation|optimizer|lr|
+| :---: | :---: | :---: |
+|-|-|-|
+|-|-|-|
+|['relu', 'relu', 'relu', 'linear']|Adam|0.001|
+  
+<div style="page-break-after: always;"></div>  
+    
+  
+# Metrics evaluation *(windowsize_14, Casos_t+14)*
+
+
+  
+
+|Model|MAE|MSE|
+| :---: | :---: | :---: |
+|Linear Regression|78.4029|10082.8063|
+|SVR|39.5656|2533.599|
+|DNN|46.5453|4057.9108|
   
   
 <div style="page-break-after: always;"></div>  
@@ -384,86 +388,8 @@ Contents
 <img src=".\img\5.PCA analisys.jpg" />  
 <div style="page-break-after: always;"></div>  
   
-# ICA Analisys
+# Validation curve, windowsize_1, Casos_t+1
 
 
   
-<img src=".\img\6.ICA Analisys.jpg" />  
-<img src=".\img\7.ICA Analisys(1).jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Correlation matrix
-
-
-  
-<img src=".\img\8.Correlation matrix.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Validation curve Linear Regression *(fit_intercept, windowsize=2)*
-
-
-  
-<img src=".\img\9.Validation curve Linear Regression-fit_intercept, windowsize=2.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Validation curve Linear Regression *(normalize, windowsize=2)*
-
-
-  
-<img src=".\img\10.Validation curve Linear Regression-normalize, windowsize=2.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Prediction Linear Regression *(UCI, windowsize=2)*
-
-
-  
-<img src=".\img\11.Prediction Linear Regression-UCI, windowsize=2.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Validation curve Linear Regression *(fit_intercept, windowsize=3)*
-
-
-  
-<img src=".\img\12.Validation curve Linear Regression-fit_intercept, windowsize=3.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Validation curve Linear Regression *(normalize, windowsize=3)*
-
-
-  
-<img src=".\img\13.Validation curve Linear Regression-normalize, windowsize=3.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Prediction Linear Regression *(UCI, windowsize=3)*
-
-
-  
-<img src=".\img\14.Prediction Linear Regression-UCI, windowsize=3.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Validation curve Linear Regression *(fit_intercept, windowsize=4)*
-
-
-  
-<img src=".\img\15.Validation curve Linear Regression-fit_intercept, windowsize=4.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Validation curve Linear Regression *(normalize, windowsize=4)*
-
-
-  
-<img src=".\img\16.Validation curve Linear Regression-normalize, windowsize=4.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Prediction Linear Regression *(UCI, windowsize=4)*
-
-
-  
-<img src=".\img\17.Prediction Linear Regression-UCI, windowsize=4.jpg" />  
-<div style="page-break-after: always;"></div>  
-  
-# Windowsize comparison Linear Regression
-
-
-  
-<img src=".\img\19.Windowsize comparison Linear Regression.jpg" />
+<img src=".\img\6.Validation curve, windowsize_1, Casos_t+1.jpg" />

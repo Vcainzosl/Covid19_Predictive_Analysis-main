@@ -1,71 +1,70 @@
-from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-from utils.Splitter import Splitter
+from sklearn.model_selection import RandomizedSearchCV
 
 
 class Optimizing:
-    def __init__(
-        self,
-        X,
-        t,
-        model: object,
-        filter_rate=10,
-        **kwargs,
-    ):
+    """Class to perform model optimizing"""
+
+    def __init__(self, X, t, model: object, cv, trials, **kwargs):
+        """Contructor of Optimizing class
+
+        :param X: training dataset
+        :type X: pandas.DataFrame
+        :param t: training labels
+        :type t: pandas.Series
+        :param model: model of scikit-learn
+        :type model: object
+        :param cv: number of folds
+        :type cv: int
+        :param trials: number of trials
+        :type trials: int
+        """
         self.model = model
         self.params_dist = self.model.params_dist
-        self.optimize_model(X, t, filter_rate=10, **kwargs)
+        # Call optimizing method
+        self.optimize_model(X, t, cv=cv, n_iter=trials, **kwargs)
+        # Get results
         self.best_model = self.get_best_model()
         self.best_params = self.get_best_params()
         self.best_results = self.get_best_results()
+        self.best_index = self.random_search.best_index_
 
-    def optimize_model(self, X, t, filter_rate=10, **kwargs):
+    def optimize_model(self, X, t, **kwargs):
+        """Performs optimizing model in hyperparameters range values
+
+        :param X: training dataset
+        :type X: pandas.DataFrame
+        :param t: training label
+        :type t: pandas.Series
+        """
+        # Using Random search with hyperparameters range values implicit define in each model
         clf = RandomizedSearchCV(
-            self.model.model,
-            self.model.params_dist,
-            **Splitter(RandomizedSearchCV, **kwargs).kwargs,
+            self.model.model, self.model.params_dist, **kwargs
         )
-        self.random_search = clf.fit(X, t, **Splitter(clf.fit, **kwargs).kwargs)
-        estimator = self.random_search.best_estimator_
-        param_grid = {}
-        self.filter = False
-        for i in self.random_search.best_params_:
-            if isinstance(self.random_search.best_params_[i], (int, float)):
-                self.filter = True
-                param_grid[i] = np.arange(
-                    self.random_search.best_params_[i] / filter_rate,
-                    self.random_search.best_params_[i] * filter_rate,
-                )
-        if self.filter:
-            clf = GridSearchCV(
-                estimator=estimator,
-                param_grid=param_grid,
-                **kwargs,
-            )
-            self.filter_search = clf.fit(
-                X, t, **Splitter(clf.fit, **kwargs).kwargs
-            )
-            self.params_dist = param_grid
+        self.random_search = clf.fit(X, t)
 
     def get_best_model(self):
-        if self.filter:
-            return self.filter_search.best_estimator_
-        else:
-            return self.random_search.best_estimator_
+        """Get best model
+
+        :return: best model
+        :rtype: object Estimator
+        """
+        return self.random_search.best_estimator_
 
     def get_best_params(self):
-        if self.filter:
-            return {
-                "Model": self.model.model_name,
-                **self.filter_search.best_params_,
-            }
-        else:
-            return {
-                "Model": self.model.model_name,
-                **self.random_search.best_params_,
-            }
+        """Get best hyperparameters
+
+        :return: best hyperparameters
+        :rtype: dict
+        """
+        return {
+            "Model": self.model.model_name,
+            **self.random_search.best_params_,
+        }
 
     def get_best_results(self):
-        if self.filter:
-            return self.filter_search.cv_results_
-        else:
-            return self.random_search.cv_results_
+        """Get best results
+
+        :return: best validation and training results
+        :rtype: dict
+        """
+        return self.random_search.cv_results_

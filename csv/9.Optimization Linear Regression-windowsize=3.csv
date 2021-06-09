@@ -1,5 +1,0 @@
-mean_fit_time,std_fit_time,mean_score_time,std_score_time,param_normalize,param_fit_intercept,params,split0_test_score,split1_test_score,split2_test_score,split3_test_score,split4_test_score,mean_test_score,std_test_score,rank_test_score,split0_train_score,split1_train_score,split2_train_score,split3_train_score,split4_train_score,mean_train_score,std_train_score
-0.0034,0.0005,0.002,0.0,True,True,"{'normalize': 'True', 'fit_intercept': 'True'}",0.7497,0.7528,0.0087,0.2808,0.617,0.4818,0.2925,1,0.8458,0.8542,0.8436,0.8897,0.8538,0.8574,0.0167
-0.003,0.0006,0.002,0.0,False,True,"{'normalize': 'False', 'fit_intercept': 'True'}",0.7497,0.7528,0.0087,0.2808,0.617,0.4818,0.2925,1,0.8458,0.8542,0.8436,0.8897,0.8538,0.8574,0.0167
-0.0048,0.0016,0.0034,0.0008,True,False,"{'normalize': 'True', 'fit_intercept': 'False'}",0.7497,0.7528,0.0087,0.2808,0.617,0.4818,0.2925,1,0.8458,0.8542,0.8436,0.8897,0.8538,0.8574,0.0167
-0.0036,0.0008,0.0026,0.0008,False,False,"{'normalize': 'False', 'fit_intercept': 'False'}",0.7497,0.7528,0.0087,0.2808,0.617,0.4818,0.2925,1,0.8458,0.8542,0.8436,0.8897,0.8538,0.8574,0.0167
