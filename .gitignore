@@ -8,10 +8,10 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-make.bat
-Makefile
-report.md
-report.pdf
+.make.bat
+.Makefile
+.report.md
+.report.pdf
 test/
 csv/
 Datasets/
