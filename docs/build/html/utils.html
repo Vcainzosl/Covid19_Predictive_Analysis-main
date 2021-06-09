@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Utils functions &mdash; Covid19_Predictive_Analysis 0.1 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Preprocessing module" href="preprocessing.html" />
+    <link rel="prev" title="Main program" href="app.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Covid19_Predictive_Analysis
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="app.html">Main program</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Utils functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Preprocessing module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="processing.html">Processing module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="postprocessing.html">Postprocessing module</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Covid19_Predictive_Analysis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Utils functions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="utils-functions">
+<h1>Utils functions<a class="headerlink" href="#utils-functions" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-utils.DNNModeling"></span><dl class="py class">
+<dt id="utils.DNNModeling.DNNModeling">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.DNNModeling.</span></code><code class="sig-name descname"><span class="pre">DNNModeling</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DNN</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mae</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNModeling.html#DNNModeling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNModeling.DNNModeling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for predicting values of DNN model and get metrics</p>
+<dl class="py method">
+<dt id="utils.DNNModeling.DNNModeling.get_metrics">
+<code class="sig-name descname"><span class="pre">get_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mae</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mse</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNModeling.html#DNNModeling.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNModeling.DNNModeling.get_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate error metrics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>pandas.Series</em>) – array with real values</p></li>
+<li><p><strong>mae</strong> (<em>bool</em>) – calculate MAE</p></li>
+<li><p><strong>mse</strong> (<em>bool</em>) – calculate MSE</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.DNNModeling.DNNModeling.predict_DNN">
+<code class="sig-name descname"><span class="pre">predict_DNN</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNModeling.html#DNNModeling.predict_DNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNModeling.DNNModeling.predict_DNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs prediction values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>pandas.DataFrame</em>) – matrix test samples</p></li>
+<li><p><strong>t</strong> (<em>pandas.Series</em>) – array test samples</p></li>
+<li><p><strong>X_pred</strong> (<em>pandas.DataFrame</em>) – matrix future values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-utils.DNNOptimizing"></span><dl class="py class">
+<dt id="utils.DNNOptimizing.DNNOptimizing">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.DNNOptimizing.</span></code><code class="sig-name descname"><span class="pre">DNNOptimizing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">5)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(10,</span> <span class="pre">20)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">activation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relu'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'adam'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean_squared_error'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNOptimizing.html#DNNOptimizing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNOptimizing.DNNOptimizing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class implemeted to optimize DNN model</p>
+<dl class="py method">
+<dt id="utils.DNNOptimizing.DNNOptimizing.create_random_network">
+<code class="sig-name descname"><span class="pre">create_random_network</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNOptimizing.html#DNNOptimizing.create_random_network"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNOptimizing.DNNOptimizing.create_random_network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a random network according to hyperparameters range values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>DNN model</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>Keras model</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.DNNOptimizing.DNNOptimizing.get_best_hyperparameters">
+<code class="sig-name descname"><span class="pre">get_best_hyperparameters</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNOptimizing.html#DNNOptimizing.get_best_hyperparameters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNOptimizing.DNNOptimizing.get_best_hyperparameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to organize and get hyperparameters of the best DNN model</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.DNNOptimizing.DNNOptimizing.optimize_DNN">
+<code class="sig-name descname"><span class="pre">optimize_DNN</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kfolds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">40</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/DNNOptimizing.html#DNNOptimizing.optimize_DNN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.DNNOptimizing.DNNOptimizing.optimize_DNN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs DNN optimizing</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kfolds</strong> (<em>int</em>) – number of folds for cross validation</p></li>
+<li><p><strong>trials</strong> (<em>int</em>) – number of trials</p></li>
+<li><p><strong>epochs</strong> (<em>int</em>) – number of epochs</p></li>
+<li><p><strong>batch_size</strong> (<em>int</em><em>, </em><em>optional</em>) – size of batch, defaults to 40</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-utils.LR"></span><dl class="py class">
+<dt id="utils.LR.LR">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.LR.</span></code><code class="sig-name descname"><span class="pre">LR</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params_dist</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'fit_intercept':</span> <span class="pre">('True',</span> <span class="pre">'False'),</span> <span class="pre">'normalize':</span> <span class="pre">('True',</span> <span class="pre">'False')}</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/LR.html#LR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.LR.LR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to encapsulate Linear Regression model methods</p>
+</dd></dl>
+
+<span class="target" id="module-utils.Modeling"></span><dl class="py class">
+<dt id="utils.Modeling.Modeling">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.Modeling.</span></code><code class="sig-name descname"><span class="pre">Modeling</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mae</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Modeling.html#Modeling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Modeling.Modeling" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for predicting values of models and calculate error metrics</p>
+<dl class="py method">
+<dt id="utils.Modeling.Modeling.get_metrics">
+<code class="sig-name descname"><span class="pre">get_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mae</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mse</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Modeling.html#Modeling.get_metrics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Modeling.Modeling.get_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate error metrics</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>t</strong> (<em>pandas.Series</em>) – array with real values</p></li>
+<li><p><strong>mae</strong> (<em>bool</em>) – calculate MAE</p></li>
+<li><p><strong>mse</strong> (<em>bool</em>) – calculate MSE</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Modeling.Modeling.predict_model">
+<code class="sig-name descname"><span class="pre">predict_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Modeling.html#Modeling.predict_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Modeling.Modeling.predict_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs prediction values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>pandas.DataFrame</em>) – matrix test samples</p></li>
+<li><p><strong>t</strong> (<em>pandas.Series</em>) – array test samples</p></li>
+<li><p><strong>X_pred</strong> (<em>pandas.DataFrame</em>) – matrix future values</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-utils.Models"></span><dl class="py class">
+<dt id="utils.Models.Models">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.Models.</span></code><code class="sig-name descname"><span class="pre">Models</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">LinearRegression</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">KNN</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">SVr</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Models.html#Models"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Models.Models" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to organize object models created of scikit-learn library</p>
+</dd></dl>
+
+<span class="target" id="module-utils.Optimizing"></span><dl class="py class">
+<dt id="utils.Optimizing.Optimizing">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.Optimizing.</span></code><code class="sig-name descname"><span class="pre">Optimizing</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trials</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Optimizing.html#Optimizing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Optimizing.Optimizing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to perform model optimizing</p>
+<dl class="py method">
+<dt id="utils.Optimizing.Optimizing.get_best_model">
+<code class="sig-name descname"><span class="pre">get_best_model</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Optimizing.html#Optimizing.get_best_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Optimizing.Optimizing.get_best_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get best model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>best model</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>object Estimator</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Optimizing.Optimizing.get_best_params">
+<code class="sig-name descname"><span class="pre">get_best_params</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Optimizing.html#Optimizing.get_best_params"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Optimizing.Optimizing.get_best_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get best hyperparameters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>best hyperparameters</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Optimizing.Optimizing.get_best_results">
+<code class="sig-name descname"><span class="pre">get_best_results</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Optimizing.html#Optimizing.get_best_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Optimizing.Optimizing.get_best_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get best results</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>best validation and training results</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Optimizing.Optimizing.optimize_model">
+<code class="sig-name descname"><span class="pre">optimize_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Optimizing.html#Optimizing.optimize_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Optimizing.Optimizing.optimize_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs optimizing model in hyperparameters range values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>pandas.DataFrame</em>) – training dataset</p></li>
+<li><p><strong>t</strong> (<em>pandas.Series</em>) – training label</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-utils.Saving"></span><dl class="py class">
+<dt id="utils.Saving.Saving">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.Saving.</span></code><code class="sig-name descname"><span class="pre">Saving</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">csv</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pickle</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Saving.html#Saving"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Saving.Saving" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class with util fuctions to save files</p>
+<dl class="py method">
+<dt id="utils.Saving.Saving.save_csv">
+<code class="sig-name descname"><span class="pre">save_csv</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Saving.html#Saving.save_csv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Saving.Saving.save_csv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predefines built-in function open() to save .csv files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>str</em>) – the .csv file to be saved</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – the name of the saved file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Saving.Saving.save_img">
+<code class="sig-name descname"><span class="pre">save_img</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Saving.html#Saving.save_img"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Saving.Saving.save_img" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specific method to save img files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<em>img</em>) – the img file to save</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – name of the file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Saving.Saving.save_pickle">
+<code class="sig-name descname"><span class="pre">save_pickle</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">object</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Saving.html#Saving.save_pickle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Saving.Saving.save_pickle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method used to save pickle files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>object</em>) – pickle object</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – name of the file</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="utils.Saving.Saving.sort_file">
+<em class="property"><span class="pre">static</span> </em><code class="sig-name descname"><span class="pre">sort_file</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folderpath</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/Saving.html#Saving.sort_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Saving.Saving.sort_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Util static method to sort files in a directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em>) – name of the file</p></li>
+<li><p><strong>folderpath</strong> (<em>str</em>) – path of the folder directory</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>number</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-utils.SVR"></span><dl class="py class">
+<dt id="utils.SVR.SVR">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.SVR.</span></code><code class="sig-name descname"><span class="pre">SVR</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="pre">params_dist={'C':</span> <span class="pre">&lt;scipy.stats._distn_infrastructure.rv_frozen</span> <span class="pre">object&gt;</span></em>, <em class="sig-param"><span class="pre">'kernel':</span> <span class="pre">('rbf'</span></em>, <em class="sig-param"><span class="pre">'poly'</span></em>, <em class="sig-param"><span class="pre">'sigmoid')}</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/SVR.html#SVR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.SVR.SVR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to encapsulate SVR model methods</p>
+</dd></dl>
+
+<span class="target" id="module-utils.WindowData"></span><dl class="py class">
+<dt id="utils.WindowData.WindowData">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">utils.WindowData.</span></code><code class="sig-name descname"><span class="pre">WindowData</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numpy.ndarray</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils/WindowData.html#WindowData"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.WindowData.WindowData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Customized class wrapper for window data</p>
+<dl class="py method">
+<dt id="utils.WindowData.WindowData.build_sample">
+<code class="sig-name descname"><span class="pre">build_sample</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">numpy.ndarray</span><a class="reference internal" href="_modules/utils/WindowData.html#WindowData.build_sample"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.WindowData.WindowData.build_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenates window data arrays</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>sample with time series data for each variable</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>numpy.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="preprocessing.html" class="btn btn-neutral float-right" title="Preprocessing module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="app.html" class="btn btn-neutral float-left" title="Main program" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Víctor Caínzos López.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
