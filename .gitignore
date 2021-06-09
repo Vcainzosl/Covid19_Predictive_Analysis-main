@@ -12,6 +12,7 @@ test/
 csv/
 Datasets/
 img/
+build/
 develop-eggs/
 dist/
 downloads/
