@@ -242,7 +242,7 @@ class Processing(Saving):
                 elif "split" in c and "test" in c:
                     val.append(results.best_results[c][results.best_index])
             plt.xlabel("cv")
-            plt.ylabel("Score R2")
+            plt.ylabel("MSE")
             # Mean validation results
             plt.axhline(
                 np.mean(-np.asarray(val)),
