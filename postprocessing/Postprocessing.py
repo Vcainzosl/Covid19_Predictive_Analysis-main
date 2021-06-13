@@ -181,12 +181,3 @@ class Postprocessing(Saving, MdUtils):
             + self.file_data_text
             + self.reference.get_references_as_markdown()
         )
-
-
-if __name__ == "__main__":
-
-    c = Postprocessing("report", "Report", "Víctor Caínzos López")
-    # c.add_csv("Preprocessed_DataSets\Data_Slided.csv")
-    # c.add_csv("Preprocessed_DataSets\Original_Data.csv")
-
-    # c.create_report()

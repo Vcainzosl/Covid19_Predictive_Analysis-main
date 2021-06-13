@@ -91,7 +91,7 @@ class Preprocessing(Saving):
         column: str,
         values: list,
         filename="Filter Data",
-        save=False,
+        save=True,
         **kwargs,
     ) -> pd.DataFrame:
         """Filter dataset samples by names in columns
@@ -104,7 +104,7 @@ class Preprocessing(Saving):
         :type values: list
         :param filename: name of the DataSet filtered .csv file
         :type filename: str
-        :param save: save the new file, defaults to False
+        :param save: save the new file, defaults to True
         :type save: bool, optional
         :return: DataSet filtered
         :rtype: pd.DataFrame
@@ -120,7 +120,7 @@ class Preprocessing(Saving):
         data: pd.DataFrame,
         columns: list,
         filename="Elimination Data",
-        save=False,
+        save=True,
         **kwargs,
     ) -> pd.DataFrame:
         """delete those columns in DataSet unwanted
@@ -131,7 +131,7 @@ class Preprocessing(Saving):
         :type columns: list
         :param filename: name of the DataSet after elimination .csv file
         :type filename: str
-        :param save: save the new file, defaults to False
+        :param save: save the new file, defaults to True
         :type save: bool, optional
         :return: Dataset clean of undesired features
         :rtype: pd.DataFrame
@@ -150,7 +150,7 @@ class Preprocessing(Saving):
         label="Casos",
         wrapper_class=WindowData,
         filename="Slided Data",
-        save=False,
+        save=True,
         **kwargs,
     ) -> pd.DataFrame:
         """Runs sliding window with overlapping on DataSet values
@@ -165,7 +165,7 @@ class Preprocessing(Saving):
         :type wrapper_class: Class, optional
         :param filename: name of the new file, defaults to "Slided Data"
         :type filename: str, optional
-        :param save: save new csv file, defaults to False
+        :param save: save new csv file, defaults to True
         :type save: bool, optional
         :return: matrix with samples, array with labels and matrix with samples to predict new values
         :rtype: pandas.DataFrame, pandas.Series, pandas.DataFrame
@@ -183,13 +183,13 @@ class Preprocessing(Saving):
             for i in range(bucket_size):
                 # Past samples
                 if i < window:
-                    columns.append(name + "_t" + str(i - window))
+                    columns.append(name + " t" + str(i - window))
                 # Current sample
                 elif i == window:
                     columns.append(name)
                 # Future samples
                 elif i > window:
-                    columns.append(name + "_t+" + str(i - window))
+                    columns.append(name + " t+" + str(i - window))
 
         slider = Slider(bucket_size, overlap_count, WindowData)
         # Using dataset trapose
@@ -237,7 +237,27 @@ class Preprocessing(Saving):
 
         # Matrix of samples, array of labels and matrix of samples to predict (without labels)
         X = Data[xcol]
-        t = Data[label + "_t+" + str(prediction)]
+        t = Data[label + " t+" + str(prediction)]
+        if save:
+            self.save_csv(
+                X.head().to_csv(),
+                "X-windowsize="
+                + str(window)
+                + ", "
+                + label
+                + " t+"
+                + str(prediction),
+            )
+            self.save_csv(
+                t.head().to_csv(),
+                "t-windowsize="
+                + str(window)
+                + ", "
+                + label
+                + " t+"
+                + str(prediction),
+            )
+
         return X, t, predict
 
     def get_plots(self, data: pd.DataFrame, filename="Distribution Data"):

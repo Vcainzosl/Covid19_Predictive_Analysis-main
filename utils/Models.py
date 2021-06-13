@@ -8,7 +8,6 @@ class Models:
     def __init__(
         self,
         LinearRegression: bool = True,
-        KNN: bool = False,
         SVr: bool = True,
     ):
         """Contructor of Models class

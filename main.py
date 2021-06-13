@@ -1,5 +1,6 @@
 from preprocessing.Preprocessing import Preprocessing
 from processing.Processing import Processing
+from postprocessing.Postprocessing import Postprocessing
 from utils.Models import Models
 
 
@@ -68,14 +69,19 @@ def make_processing(prp, windowsize):
     DNNscores = {}
     cv = int(input("Número de K-folds: "))
     trials = int(input("Número de intentos por modelo: "))
-    epochs = int(input("Número de epochs por modelo: "))
+    epochs = int(input("Número de epochs: "))
+    batch_size = int(input("Muestras por lote (batch): "))
+    # Predictions same as windosize
+    predictions = windowsize
     for wsize in windowsize:
         testing_results = {}
         # Same values to predict as windowsize
-        for prediction in windowsize:
+        for prediction in predictions:
             X, t, X_pred = slide_data(prp, wsize, prediction)
             # Create object Processing
-            processing = Processing(X, t, X_pred, wsize, cv, trials, epochs)
+            processing = Processing(
+                X, t, X_pred, wsize, cv, trials, epochs, batch_size
+            )
             # Save DNN training results to plot validation curve
             DNNscores[str(prediction)] = processing.perform_optimizing_model(
                 models.models,
@@ -96,16 +102,25 @@ def make_processing(prp, windowsize):
         # Save predictions results for current windowsize
         results[wsize] = testing_results
     processing.perform_wsize_comparison(
-        results, windowsize, models.models, windowsize
+        results, predictions, models.models, windowsize
+    )
+    processing.perform_prediction_comparison(
+        results, predictions, models.models, windowsize
     )
 
 
+def make_postprocessing(filename, **kwargs):
+    pop = Postprocessing(filename, **kwargs)
+
+
 if __name__ == "__main__":
+    """
     prp = make_preprocessing(
         "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/provincias_covid19_datos_sanidad_nueva_serie.csv",
         "provincia",
         ["A Coruña", "Lugo", "Ourense", "Pontevedra"],
         ["cod_ine"],
     )
-
-    make_processing(prp, [1, 7, 14])
+    """
+    # make_processing(prp, [1, 7, 14])
+    make_postprocessing("report", title="Report", author="Víctor")

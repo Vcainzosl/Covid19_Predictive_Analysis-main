@@ -9,7 +9,7 @@ class SVR:
         self,
         params_dist={
             "kernel": ("rbf", "poly", "sigmoid"),
-            "C": loguniform(1e-5, 10),
+            "C": loguniform(1e-5, 100),
         },
         **kwargs
     ):

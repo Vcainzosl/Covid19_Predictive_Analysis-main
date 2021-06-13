@@ -16,7 +16,18 @@ class Processing(Saving):
     :type Saving: class
     """
 
-    def __init__(self, X, t, X_pred, wsize, cv, trials, epochs, train_size=0.8):
+    def __init__(
+        self,
+        X,
+        t,
+        X_pred,
+        wsize,
+        cv,
+        trials,
+        epochs,
+        batch_size,
+        train_size=0.8,
+    ):
         """Constructor of Processing class
 
         :param X: matrix of samples
@@ -54,8 +65,7 @@ class Processing(Saving):
         self.cv = cv
         self.trials = trials
         self.epochs = epochs
-        # self.save_csv(X.to_csv(), "X")
-        # self.save_csv(t.to_csv(), "t")
+        self.batch_size = batch_size
 
     def perform_optimizing_model(
         self, models: list, filename="Best hyperparameters", **kwargs
@@ -92,7 +102,7 @@ class Processing(Saving):
         # Save best hyperparameters as DataFrame
         self.save_csv(
             pd.DataFrame(results).round(4).fillna("-").to_csv(index=False),
-            filename + "-windowsize_" + str(self.wsize) + ", " + self.t.name,
+            filename + "-windowsize=" + str(self.wsize) + ", " + self.t.name,
         )
         # Return validation and training scores for DNN to plot validation curve
         return DNNscores
@@ -104,7 +114,12 @@ class Processing(Saving):
         :rtype: dict
         """
         self.DNN_optimizing = DNNOptimizing(
-            self.X_train, self.t_train, self.cv, self.trials, self.epochs
+            self.X_train,
+            self.t_train,
+            self.cv,
+            self.trials,
+            self.epochs,
+            self.batch_size,
         )
         return self.DNN_optimizing.scores
 
@@ -144,7 +159,7 @@ class Processing(Saving):
         # Build a DataFrame and save it as csv file
         self.save_csv(
             pd.DataFrame(results).fillna("-").round(4).to_csv(index=False),
-            filename + "-windowsize_" + str(self.wsize) + ", " + self.t.name,
+            filename + "-windowsize=" + str(self.wsize) + ", " + self.t.name,
         )
         return self.model_testing
 
@@ -168,7 +183,7 @@ class Processing(Saving):
         ind = pd.to_datetime(self.X_test.index)
         # Index of prediction samples
         indp = pd.to_datetime(pd.concat([self.X_test, self.X_pred]).index)
-        plt.title("Windowsize_" + str(self.wsize) + ", " + self.t.name)
+        plt.title("Windowsize " + str(self.wsize) + ", " + self.t.name)
         # Plot real outputs
         plt.plot(
             ind,
@@ -228,11 +243,13 @@ class Processing(Saving):
         """
 
         fig = plt.figure(figsize=(10, 5))
-        plt.title("Windowsize_" + str(self.wsize) + ", " + self.t.name)
+        plt.title("Windowsize=" + str(self.wsize) + ", " + self.t.name)
         # Create index with number of kfolds
         ind = np.arange(1, self.cv + 1)
+        # Labels for validation average results
+        nmodels = np.arange(1, len(models) + 1)
         # Plot validation results for each model
-        for model, color in zip(models, colors):
+        for model, color, n in zip(models, colors, nmodels):
             results = self.model_optimizing[model.model_name]
             train = []
             val = []
@@ -250,9 +267,9 @@ class Processing(Saving):
                 linestyle="dotted",
             )
             plt.text(
-                1,
+                n,
                 np.mean(-np.asarray(val)) + 1,
-                "Mean: " + str(int(np.mean(-np.asarray(val)) + 1)),
+                "Media: " + str(int(np.mean(-np.asarray(val)) + 1)),
                 bbox=dict(boxstyle="round", fc="0.8"),
             )
             plt.plot(
@@ -262,6 +279,15 @@ class Processing(Saving):
                 marker="o",
                 color=color,
             )
+            plt.plot(
+                ind,
+                -np.asarray(train),
+                label="Train-" + model.model_name,
+                marker="x",
+                color=color,
+                linewidth=1,
+                linestyle="dashed",
+            )
         # Add DNN results
         plt.axhline(
             np.mean(np.mean(self.DNN_optimizing.scores["val"], axis=1)),
@@ -269,9 +295,9 @@ class Processing(Saving):
             linestyle="dotted",
         )
         plt.text(
-            1,
+            n + 1,
             np.mean(np.mean(self.DNN_optimizing.scores["val"], axis=1)),
-            "Mean: "
+            "Media: "
             + str(
                 int(
                     np.mean(np.mean(self.DNN_optimizing.scores["val"], axis=1))
@@ -287,13 +313,22 @@ class Processing(Saving):
             marker="o",
             c="g",
         )
+        plt.plot(
+            ind,
+            np.mean(self.DNN_optimizing.scores["train"], axis=1),
+            label="Train-DNN",
+            marker="x",
+            c="g",
+            linewidth=1,
+            linestyle="dashed",
+        )
 
         plt.legend()
-        plt.xticks(np.arange(1, 6))
+        plt.xticks(np.arange(1, self.cv + 1))
         # Save output img file
         self.save_img(
             plt,
-            filename + ", windowsize_" + str(self.wsize) + ", " + self.t.name,
+            filename + ", windowsize " + str(self.wsize) + ", " + self.t.name,
         )
         plt.close()
 
@@ -315,13 +350,13 @@ class Processing(Saving):
             plt.plot(
                 ind,
                 np.mean(DNNscores[i]["val"], axis=0),
-                label="Val-DNN, " + self.t.name.split("_")[0] + "_t+" + i,
+                label="Val-DNN, " + self.t.name.split(" ")[0] + " t+" + i,
                 c=color,
             )
             plt.plot(
                 ind,
                 np.mean(DNNscores[i]["train"], axis=0),
-                label="Train-DNN, " + self.t.name.split("_")[0] + "_t+" + i,
+                label="Train-DNN, " + self.t.name.split(" ")[0] + " t+" + i,
                 linestyle="dashed",
                 c=color,
             )
@@ -334,7 +369,7 @@ class Processing(Saving):
         plt.legend()
         plt.xticks(np.arange(1, self.DNN_optimizing.epochs + 1))
         # Save output img file
-        self.save_img(plt, "Validation DNN, windowsize_" + str(self.wsize))
+        self.save_img(plt, "Validation DNN, windowsize=" + str(self.wsize))
         plt.close()
 
     def perform_wsize_comparison(
@@ -344,8 +379,9 @@ class Processing(Saving):
         models,
         windowsize,
         scoring=["MAE", "MSE"],
+        colors=["b", "y"],
     ):
-        """Plots metrics for each model adn windowsize
+        """Plots metrics for each model and windowsize
 
         :param results: results with Modeling objects for each model
         :type results: dict
@@ -357,14 +393,18 @@ class Processing(Saving):
         :type windowsize: int
         :param scoring: metrics used, defaults to ["MAE", "MSE"]
         :type scoring: list, optional
+        :param colors: colors for plotting, defaults to ["b", "y"]
+        :type colors: list, optional
         """
         # Plot windowsize for each prediction, score and model
+        # Labels for metrics average results
+        windows = np.arange(0, len(windowsize))
         for n in predictions:
             label = str(n)
             for score in scoring:
                 fig = plt.figure(figsize=(10, 5))
-                plt.title(score + ", " + label)
-                for model in models:
+                plt.title(self.t.name + " t+" + label)
+                for model, color, n in zip(models, colors, windows):
                     model_metrics = []
                     for wsize in windowsize:
                         df = pd.DataFrame(
@@ -380,8 +420,17 @@ class Processing(Saving):
                         label=model.model_name,
                         marker="o",
                     )
-                    for x, y in zip(windowsize, model_metrics):
-                        plt.text(x, y, int(y), weight="bold")
+                    plt.axhline(
+                        np.mean(np.mean(model_metrics, axis=1)),
+                        color=color,
+                        linestyle="dotted",
+                    )
+                    plt.text(
+                        windowsize[n],
+                        np.mean(model_metrics) + 1,
+                        "Media: " + str(int(np.mean(model_metrics) + 1)),
+                        bbox=dict(boxstyle="round", fc="0.8"),
+                    )
                     plt.legend()
                     plt.xlabel("Windowsize")
                     plt.xticks(windowsize)
@@ -403,15 +452,132 @@ class Processing(Saving):
                     label="DNN",
                     marker="o",
                 )
-                for x, y in zip(windowsize, DNN_metrics):
-                    plt.text(x, y, int(y), weight="bold")
+                plt.axhline(
+                    np.mean(np.mean(DNN_metrics, axis=1)),
+                    color="g",
+                    linestyle="dotted",
+                )
+                plt.text(
+                    windowsize[n + 1],
+                    np.mean(DNN_metrics) + 1,
+                    "Media: " + str(int(np.mean(DNN_metrics) + 1)),
+                    bbox=dict(boxstyle="round", fc="0.8"),
+                )
                 plt.legend()
                 plt.xlabel("Windowsize")
+                plt.ylabel(score)
                 plt.xticks(windowsize)
 
                 # Save img file
                 self.save_img(
                     plt,
-                    "Windowsize comparison-" + score + ", " + label,
+                    "Windowsize comparison-" + score + ", t+" + label,
+                )
+                plt.close()
+
+    def perform_prediction_comparison(
+        self,
+        results: dict,
+        predictions: list,
+        models,
+        windowsize,
+        scoring=["MAE", "MSE"],
+        colors=["b", "y"],
+    ):
+        """Plots metrics for each model and prediction
+
+        :param results: results with Modeling objects for each model
+        :type results: dict
+        :param t: predictions dates from today
+        :type t: list
+        :param models: models of scikit-learn
+        :type models: list
+        :param windowsize: windowsize, number of past samples considered as variables
+        :type windowsize: int
+        :param scoring: metrics used, defaults to ["MAE", "MSE"]
+        :type scoring: list,
+        :param colors: colors for plotting, defaults to ["b", "y"]
+        :type colors: list, optional
+        """
+        # Plot prediction for each windowsize, score and model
+        # Labels for metrics average results
+        predicts = np.arange(0, len(predictions))
+        for wsize in windowsize:
+            for score in scoring:
+                fig = plt.figure(figsize=(10, 5))
+                plt.title("Windowsize=" + str(wsize))
+                for model, color, n in zip(models, colors, predicts):
+                    model_metrics = []
+                    for prediction in predictions:
+                        label = str(prediction)
+                        df = pd.DataFrame(
+                            results[wsize][label][model.model_name].metrics,
+                            index=[label],
+                        )
+                        model_metrics.append(df[score].values)
+                    model_metrics = np.asarray(model_metrics)
+                    predictions = np.asarray(predictions)
+                    plt.plot(
+                        predictions,
+                        model_metrics,
+                        label=model.model_name,
+                        marker="o",
+                    )
+                    plt.axhline(
+                        np.mean(np.mean(model_metrics, axis=1)),
+                        color=color,
+                        linestyle="dotted",
+                    )
+                    plt.text(
+                        predictions[n],
+                        np.mean(model_metrics) + 1,
+                        "Media: " + str(int(np.mean(model_metrics) + 1)),
+                        bbox=dict(boxstyle="round", fc="0.8"),
+                    )
+                    plt.legend()
+                    plt.xlabel("Predictions")
+                    plt.ylabel(score)
+                    plt.xticks(predictions)
+
+                # Add DNN results
+                DNN_metrics = []
+                for prediction in predictions:
+                    label = str(prediction)
+                    dfDNN = pd.DataFrame(
+                        results[wsize][label]["DNN"].metrics,
+                        index=[label],
+                    )
+                    DNN_metrics.append(dfDNN[score].values)
+
+                DNN_metrics = np.asarray(DNN_metrics)
+                predictions = np.asarray(predictions)
+                plt.plot(
+                    predictions,
+                    DNN_metrics,
+                    label="DNN",
+                    marker="o",
+                )
+                plt.axhline(
+                    np.mean(np.mean(DNN_metrics, axis=1)),
+                    color="g",
+                    linestyle="dotted",
+                )
+                plt.text(
+                    predictions[n + 1],
+                    np.mean(DNN_metrics) + 1,
+                    "Media: " + str(int(np.mean(DNN_metrics) + 1)),
+                    bbox=dict(boxstyle="round", fc="0.8"),
+                )
+                plt.legend()
+                plt.xlabel("Predictions")
+                plt.xticks(predictions)
+
+                # Save img file
+                self.save_img(
+                    plt,
+                    "Predictions comparison-"
+                    + score
+                    + ", windowsize="
+                    + str(wsize),
                 )
                 plt.close()

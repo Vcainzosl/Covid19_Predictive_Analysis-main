@@ -14,6 +14,7 @@ class DNNOptimizing:
         cv,
         trials,
         epochs,
+        batch_size,
         layers=(1, 5),
         n=(10, 20),
         activation="relu",
@@ -50,7 +51,7 @@ class DNNOptimizing:
         self.activation = activation
         self.loss = loss
         # Call optimizing method
-        self.optimize_DNN(cv, trials, epochs)
+        self.optimize_DNN(cv, trials, epochs, batch_size)
         # Get results
         self.get_best_hyperparameters()
 
@@ -79,7 +80,7 @@ class DNNOptimizing:
         model.compile(loss=self.loss, optimizer="adam")
         return model
 
-    def optimize_DNN(self, kfolds, trials, epochs, batch_size=40):
+    def optimize_DNN(self, kfolds, trials, epochs, batch_size):
         """Performs DNN optimizing
 
         :param kfolds: number of folds for cross validation
