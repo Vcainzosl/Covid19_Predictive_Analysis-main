@@ -101,8 +101,6 @@ class Postprocessing(Saving, MdUtils):
 
         # Reading filename from path with conditional style for aesthetics md
         filename = filepath.split("\\")[-1].split(".")[1].split("-")
-        if len(filename) > 1:
-            filename[1] = "*(" + filename[1] + ")*"
         self.new_line("  ")
         self.new_header(1, (" ").join(filename))
         self.new_paragraph(description)
@@ -155,8 +153,6 @@ class Postprocessing(Saving, MdUtils):
         """
         # Reading filename from path with conditional style for aesthetics md
         filename = filepath.split("\\")[-1].split(".")[1].split("-")
-        if len(filename) > 1:
-            filename[1] = "*(" + filename[1] + ")*"
         filename = (" ").join(filename)
         path = filepath
         # Control headers if it is an image of multiples

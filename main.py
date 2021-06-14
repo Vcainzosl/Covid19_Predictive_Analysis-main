@@ -30,9 +30,8 @@ def make_preprocessing(
     data = prp.filter_by_names(data, column_filter, values)
     data = prp.eliminate_variables(data, variable_delete, axis=1)
     prp.get_plots(data)
+    prp.get_correlation_matrix(data)
     prp.get_PCA(data)
-    # prp.get_ICA(data)
-    # prp.get_correlation_matrix(data)
 
     return prp
 
@@ -114,13 +113,13 @@ def make_postprocessing(filename, **kwargs):
 
 
 if __name__ == "__main__":
-    """
+
     prp = make_preprocessing(
         "https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/provincias_covid19_datos_sanidad_nueva_serie.csv",
         "provincia",
         ["A Coruña", "Lugo", "Ourense", "Pontevedra"],
         ["cod_ine"],
     )
-    """
-    # make_processing(prp, [1, 7, 14])
+
+    make_processing(prp, [1, 7, 14])
     make_postprocessing("report", title="Report", author="Víctor")

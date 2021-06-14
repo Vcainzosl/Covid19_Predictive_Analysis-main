@@ -65,7 +65,7 @@ class Preprocessing(Saving):
     def read_dataset(
         self,
         filepath: str,
-        filename="Original Data",
+        filename="Original-Data",
         save=True,
         **kwargs,
     ) -> pd.DataFrame:
@@ -90,7 +90,7 @@ class Preprocessing(Saving):
         data: pd.DataFrame,
         column: str,
         values: list,
-        filename="Filter Data",
+        filename="Filter-Data",
         save=True,
         **kwargs,
     ) -> pd.DataFrame:
@@ -119,7 +119,7 @@ class Preprocessing(Saving):
         self,
         data: pd.DataFrame,
         columns: list,
-        filename="Elimination Data",
+        filename="Elimination-Data",
         save=True,
         **kwargs,
     ) -> pd.DataFrame:
@@ -149,7 +149,7 @@ class Preprocessing(Saving):
         prediction,
         label="Casos",
         wrapper_class=WindowData,
-        filename="Slided Data",
+        filename="Slided-Data",
         save=True,
         **kwargs,
     ) -> pd.DataFrame:
@@ -243,24 +243,24 @@ class Preprocessing(Saving):
                 X.head().to_csv(),
                 "X-windowsize="
                 + str(window)
-                + ", "
+                + ",-"
                 + label
-                + " t+"
+                + "-t+"
                 + str(prediction),
             )
             self.save_csv(
                 t.head().to_csv(),
                 "t-windowsize="
                 + str(window)
-                + ", "
+                + ",-"
                 + label
-                + " t+"
+                + "-t+"
                 + str(prediction),
             )
 
         return X, t, predict
 
-    def get_plots(self, data: pd.DataFrame, filename="Distribution Data"):
+    def get_plots(self, data: pd.DataFrame, filename="Distribution-Data"):
         """Plot original data distibutions
 
         :param data: original dataset
@@ -286,7 +286,7 @@ class Preprocessing(Saving):
             self.save_img(plt, filename + "(" + str(i + 1) + ")")
         plt.close()
 
-    def get_correlation_matrix(self, X, filename="Correlation matrix"):
+    def get_correlation_matrix(self, X, filename="Correlation-matrix"):
         """Method to get correlation matrix
 
         :param X: matrix with inputs values (variables)
@@ -314,7 +314,7 @@ class Preprocessing(Saving):
         self.save_img(plt, filename)
         plt.close()
 
-    def get_PCA(self, X, filename="PCA analisys", **kwargs):
+    def get_PCA(self, X, filename="PCA-analisys", **kwargs):
         """Performs PCA analysis
 
         :param X: matrix with input variables

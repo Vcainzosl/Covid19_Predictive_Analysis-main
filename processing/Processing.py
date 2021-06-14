@@ -68,7 +68,7 @@ class Processing(Saving):
         self.batch_size = batch_size
 
     def perform_optimizing_model(
-        self, models: list, filename="Best hyperparameters", **kwargs
+        self, models: list, filename="Best-hyperparameters", **kwargs
     ):
         """Performs optimizing models
 
@@ -102,7 +102,7 @@ class Processing(Saving):
         # Save best hyperparameters as DataFrame
         self.save_csv(
             pd.DataFrame(results).round(4).fillna("-").to_csv(index=False),
-            filename + "-windowsize=" + str(self.wsize) + ", " + self.t.name,
+            filename + "-windowsize=" + str(self.wsize) + ",-" + self.t.name,
         )
         # Return validation and training scores for DNN to plot validation curve
         return DNNscores
@@ -124,7 +124,7 @@ class Processing(Saving):
         return self.DNN_optimizing.scores
 
     def perform_testing_model(
-        self, models: list, filename="Metrics evaluation", **kwargs
+        self, models: list, filename="Metrics-evaluation", **kwargs
     ):
         """Performs testing models
 
@@ -159,7 +159,7 @@ class Processing(Saving):
         # Build a DataFrame and save it as csv file
         self.save_csv(
             pd.DataFrame(results).fillna("-").round(4).to_csv(index=False),
-            filename + "-windowsize=" + str(self.wsize) + ", " + self.t.name,
+            filename + "-windowsize=" + str(self.wsize) + ",-" + self.t.name,
         )
         return self.model_testing
 
@@ -225,12 +225,15 @@ class Processing(Saving):
         # Save predictions as img file
         self.save_img(
             plt,
-            "Prediction-" + self.t.name + ", windowsize=" + str(self.wsize),
+            "Prediction-"
+            + ("-").join(self.t.name.split(" "))
+            + ",-windowsize="
+            + str(self.wsize),
         )
         plt.close()
 
     def perform_validation_models(
-        self, models: list, filename="Validation curve", colors=["b", "y"]
+        self, models: list, filename="Validation-curve", colors=["b", "y"]
     ):
         """Plots mean validation results for models
 
@@ -328,7 +331,11 @@ class Processing(Saving):
         # Save output img file
         self.save_img(
             plt,
-            filename + ", windowsize " + str(self.wsize) + ", " + self.t.name,
+            filename
+            + "-windowsize="
+            + str(self.wsize)
+            + ",-"
+            + ("-").join(self.t.name.split(" ")),
         )
         plt.close()
 
@@ -344,7 +351,9 @@ class Processing(Saving):
         plt.title("Windowsize_" + str(self.wsize) + ", DNN")
         # Define index with number of epochs
         ind = np.arange(1, self.DNN_optimizing.epochs + 1)
-        for i, color in zip(DNNscores, colors):
+        # Lenght of scores to plot labels
+        size = np.arange(len(DNNscores))
+        for i, color, point in zip(DNNscores, colors, size):
             yval = np.mean(DNNscores[i]["val"], axis=0)
             ytrain = np.mean(DNNscores[i]["train"], axis=0)
             plt.plot(
@@ -363,13 +372,13 @@ class Processing(Saving):
             plt.annotate(
                 "%i" % (yval[-1]),
                 (len(yval) - 1, yval[-1]),
-                xytext=(len(yval) - 2, yval[-2]),
+                xytext=(len(yval) + (point - 2), yval[-2]),
                 bbox=dict(boxstyle="round", fc="0.8"),
             )
         plt.legend()
         plt.xticks(np.arange(1, self.DNN_optimizing.epochs + 1))
         # Save output img file
-        self.save_img(plt, "Validation DNN, windowsize=" + str(self.wsize))
+        self.save_img(plt, "Validation-DNN-windowsize=" + str(self.wsize))
         plt.close()
 
     def perform_wsize_comparison(
@@ -403,7 +412,7 @@ class Processing(Saving):
             label = str(n)
             for score in scoring:
                 fig = plt.figure(figsize=(10, 5))
-                plt.title(self.t.name + " t+" + label)
+                plt.title(self.t.name.split(" ")[0] + " t+" + label)
                 for model, color, n in zip(models, colors, windows):
                     model_metrics = []
                     for wsize in windowsize:
@@ -471,7 +480,7 @@ class Processing(Saving):
                 # Save img file
                 self.save_img(
                     plt,
-                    "Windowsize comparison-" + score + ", t+" + label,
+                    "Windowsize-comparison-" + score + ",-t+" + label,
                 )
                 plt.close()
 
@@ -575,9 +584,9 @@ class Processing(Saving):
                 # Save img file
                 self.save_img(
                     plt,
-                    "Predictions comparison-"
+                    "Predictions-comparison-"
                     + score
-                    + ", windowsize="
+                    + ",-windowsize="
                     + str(wsize),
                 )
                 plt.close()
