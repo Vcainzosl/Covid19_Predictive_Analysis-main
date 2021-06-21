@@ -15,10 +15,3 @@ Welcome to Covid19 Predictive Analysis's documentation!
    preprocessing.rst
    processing.rst
    postprocessing.rst
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
