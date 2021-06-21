@@ -157,6 +157,7 @@
   <h1>Source code for main</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">preprocessing.Preprocessing</span> <span class="kn">import</span> <span class="n">Preprocessing</span>
 <span class="kn">from</span> <span class="nn">processing.Processing</span> <span class="kn">import</span> <span class="n">Processing</span>
+<span class="kn">from</span> <span class="nn">postprocessing.Postprocessing</span> <span class="kn">import</span> <span class="n">Postprocessing</span>
 <span class="kn">from</span> <span class="nn">utils.Models</span> <span class="kn">import</span> <span class="n">Models</span>
 
 
@@ -186,9 +187,8 @@
     <span class="n">data</span> <span class="o">=</span> <span class="n">prp</span><span class="o">.</span><span class="n">filter_by_names</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">column_filter</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">prp</span><span class="o">.</span><span class="n">eliminate_variables</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">variable_delete</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">prp</span><span class="o">.</span><span class="n">get_plots</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">prp</span><span class="o">.</span><span class="n">get_correlation_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="n">prp</span><span class="o">.</span><span class="n">get_PCA</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-    <span class="c1"># prp.get_ICA(data)</span>
-    <span class="c1"># prp.get_correlation_matrix(data)</span>
 
     <span class="k">return</span> <span class="n">prp</span></div>
 
@@ -225,14 +225,19 @@
     <span class="n">DNNscores</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">cv</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Número de K-folds: &quot;</span><span class="p">))</span>
     <span class="n">trials</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Número de intentos por modelo: &quot;</span><span class="p">))</span>
-    <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Número de epochs por modelo: &quot;</span><span class="p">))</span>
+    <span class="n">epochs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Número de epochs: &quot;</span><span class="p">))</span>
+    <span class="n">batch_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Muestras por lote (batch): &quot;</span><span class="p">))</span>
+    <span class="c1"># Predictions same as windosize</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">windowsize</span>
     <span class="k">for</span> <span class="n">wsize</span> <span class="ow">in</span> <span class="n">windowsize</span><span class="p">:</span>
         <span class="n">testing_results</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># Same values to predict as windowsize</span>
-        <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">windowsize</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">prediction</span> <span class="ow">in</span> <span class="n">predictions</span><span class="p">:</span>
             <span class="n">X</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">X_pred</span> <span class="o">=</span> <span class="n">slide_data</span><span class="p">(</span><span class="n">prp</span><span class="p">,</span> <span class="n">wsize</span><span class="p">,</span> <span class="n">prediction</span><span class="p">)</span>
             <span class="c1"># Create object Processing</span>
-            <span class="n">processing</span> <span class="o">=</span> <span class="n">Processing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">X_pred</span><span class="p">,</span> <span class="n">wsize</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">epochs</span><span class="p">)</span>
+            <span class="n">processing</span> <span class="o">=</span> <span class="n">Processing</span><span class="p">(</span>
+                <span class="n">X</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">X_pred</span><span class="p">,</span> <span class="n">wsize</span><span class="p">,</span> <span class="n">cv</span><span class="p">,</span> <span class="n">trials</span><span class="p">,</span> <span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span>
+            <span class="p">)</span>
             <span class="c1"># Save DNN training results to plot validation curve</span>
             <span class="n">DNNscores</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">prediction</span><span class="p">)]</span> <span class="o">=</span> <span class="n">processing</span><span class="o">.</span><span class="n">perform_optimizing_model</span><span class="p">(</span>
                 <span class="n">models</span><span class="o">.</span><span class="n">models</span><span class="p">,</span>
@@ -253,11 +258,19 @@
         <span class="c1"># Save predictions results for current windowsize</span>
         <span class="n">results</span><span class="p">[</span><span class="n">wsize</span><span class="p">]</span> <span class="o">=</span> <span class="n">testing_results</span>
     <span class="n">processing</span><span class="o">.</span><span class="n">perform_wsize_comparison</span><span class="p">(</span>
-        <span class="n">results</span><span class="p">,</span> <span class="n">windowsize</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">windowsize</span>
+        <span class="n">results</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">windowsize</span>
+    <span class="p">)</span>
+    <span class="n">processing</span><span class="o">.</span><span class="n">perform_prediction_comparison</span><span class="p">(</span>
+        <span class="n">results</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">models</span><span class="p">,</span> <span class="n">windowsize</span>
     <span class="p">)</span></div>
 
 
+<span class="k">def</span> <span class="nf">make_postprocessing</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">Postprocessing</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
     <span class="n">prp</span> <span class="o">=</span> <span class="n">make_preprocessing</span><span class="p">(</span>
         <span class="s2">&quot;https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/provincias_covid19_datos_sanidad_nueva_serie.csv&quot;</span><span class="p">,</span>
         <span class="s2">&quot;provincia&quot;</span><span class="p">,</span>
@@ -266,6 +279,7 @@
     <span class="p">)</span>
 
     <span class="n">make_processing</span><span class="p">(</span><span class="n">prp</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">])</span>
+    <span class="n">make_postprocessing</span><span class="p">(</span><span class="s2">&quot;report&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Report&quot;</span><span class="p">,</span> <span class="n">author</span><span class="o">=</span><span class="s2">&quot;Víctor&quot;</span><span class="p">)</span>
 </pre></div>
 
            </div>

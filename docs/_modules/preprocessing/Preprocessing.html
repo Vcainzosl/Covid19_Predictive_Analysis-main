@@ -222,7 +222,7 @@
 <div class="viewcode-block" id="Preprocessing.read_dataset"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.read_dataset">[docs]</a>    <span class="k">def</span> <span class="nf">read_dataset</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">filepath</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Original Data&quot;</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Original-Data&quot;</span><span class="p">,</span>
         <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -247,8 +247,8 @@
         <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">column</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">values</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Filter Data&quot;</span><span class="p">,</span>
-        <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Filter-Data&quot;</span><span class="p">,</span>
+        <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Filter dataset samples by names in columns</span>
@@ -261,7 +261,7 @@
 <span class="sd">        :type values: list</span>
 <span class="sd">        :param filename: name of the DataSet filtered .csv file</span>
 <span class="sd">        :type filename: str</span>
-<span class="sd">        :param save: save the new file, defaults to False</span>
+<span class="sd">        :param save: save the new file, defaults to True</span>
 <span class="sd">        :type save: bool, optional</span>
 <span class="sd">        :return: DataSet filtered</span>
 <span class="sd">        :rtype: pd.DataFrame</span>
@@ -276,8 +276,8 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
         <span class="n">columns</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Elimination Data&quot;</span><span class="p">,</span>
-        <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Elimination-Data&quot;</span><span class="p">,</span>
+        <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;delete those columns in DataSet unwanted</span>
@@ -288,7 +288,7 @@
 <span class="sd">        :type columns: list</span>
 <span class="sd">        :param filename: name of the DataSet after elimination .csv file</span>
 <span class="sd">        :type filename: str</span>
-<span class="sd">        :param save: save the new file, defaults to False</span>
+<span class="sd">        :param save: save the new file, defaults to True</span>
 <span class="sd">        :type save: bool, optional</span>
 <span class="sd">        :return: Dataset clean of undesired features</span>
 <span class="sd">        :rtype: pd.DataFrame</span>
@@ -306,8 +306,8 @@
         <span class="n">prediction</span><span class="p">,</span>
         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Casos&quot;</span><span class="p">,</span>
         <span class="n">wrapper_class</span><span class="o">=</span><span class="n">WindowData</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Slided Data&quot;</span><span class="p">,</span>
-        <span class="n">save</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Slided-Data&quot;</span><span class="p">,</span>
+        <span class="n">save</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Runs sliding window with overlapping on DataSet values</span>
@@ -322,7 +322,7 @@
 <span class="sd">        :type wrapper_class: Class, optional</span>
 <span class="sd">        :param filename: name of the new file, defaults to &quot;Slided Data&quot;</span>
 <span class="sd">        :type filename: str, optional</span>
-<span class="sd">        :param save: save new csv file, defaults to False</span>
+<span class="sd">        :param save: save new csv file, defaults to True</span>
 <span class="sd">        :type save: bool, optional</span>
 <span class="sd">        :return: matrix with samples, array with labels and matrix with samples to predict new values</span>
 <span class="sd">        :rtype: pandas.DataFrame, pandas.Series, pandas.DataFrame</span>
@@ -340,13 +340,13 @@
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">bucket_size</span><span class="p">):</span>
                 <span class="c1"># Past samples</span>
                 <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">window</span><span class="p">:</span>
-                    <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_t&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">window</span><span class="p">))</span>
+                    <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; t&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">window</span><span class="p">))</span>
                 <span class="c1"># Current sample</span>
                 <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="n">window</span><span class="p">:</span>
                     <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
                 <span class="c1"># Future samples</span>
                 <span class="k">elif</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="n">window</span><span class="p">:</span>
-                    <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_t+&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">window</span><span class="p">))</span>
+                    <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; t+&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="n">window</span><span class="p">))</span>
 
         <span class="n">slider</span> <span class="o">=</span> <span class="n">Slider</span><span class="p">(</span><span class="n">bucket_size</span><span class="p">,</span> <span class="n">overlap_count</span><span class="p">,</span> <span class="n">WindowData</span><span class="p">)</span>
         <span class="c1"># Using dataset trapose</span>
@@ -394,10 +394,30 @@
 
         <span class="c1"># Matrix of samples, array of labels and matrix of samples to predict (without labels)</span>
         <span class="n">X</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="n">xcol</span><span class="p">]</span>
-        <span class="n">t</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot;_t+&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">prediction</span><span class="p">)]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Data</span><span class="p">[</span><span class="n">label</span> <span class="o">+</span> <span class="s2">&quot; t+&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">prediction</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_csv</span><span class="p">(</span>
+                <span class="n">X</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(),</span>
+                <span class="s2">&quot;X-windowsize=&quot;</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot;,-&quot;</span>
+                <span class="o">+</span> <span class="n">label</span>
+                <span class="o">+</span> <span class="s2">&quot;-t+&quot;</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">prediction</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_csv</span><span class="p">(</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(),</span>
+                <span class="s2">&quot;t-windowsize=&quot;</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+                <span class="o">+</span> <span class="s2">&quot;,-&quot;</span>
+                <span class="o">+</span> <span class="n">label</span>
+                <span class="o">+</span> <span class="s2">&quot;-t+&quot;</span>
+                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">prediction</span><span class="p">),</span>
+            <span class="p">)</span>
+
         <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">predict</span></div>
 
-<div class="viewcode-block" id="Preprocessing.get_plots"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.get_plots">[docs]</a>    <span class="k">def</span> <span class="nf">get_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Distribution Data&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Preprocessing.get_plots"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.get_plots">[docs]</a>    <span class="k">def</span> <span class="nf">get_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Distribution-Data&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Plot original data distibutions</span>
 
 <span class="sd">        :param data: original dataset</span>
@@ -423,7 +443,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">save_img</span><span class="p">(</span><span class="n">plt</span><span class="p">,</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;(&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;)&quot;</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Preprocessing.get_correlation_matrix"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.get_correlation_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_correlation_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Correlation matrix&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Preprocessing.get_correlation_matrix"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.get_correlation_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_correlation_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;Correlation-matrix&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to get correlation matrix</span>
 
 <span class="sd">        :param X: matrix with inputs values (variables)</span>
@@ -451,7 +471,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">save_img</span><span class="p">(</span><span class="n">plt</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Preprocessing.get_PCA"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.get_PCA">[docs]</a>    <span class="k">def</span> <span class="nf">get_PCA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;PCA analisys&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="Preprocessing.get_PCA"><a class="viewcode-back" href="../../preprocessing.html#preprocessing.Preprocessing.Preprocessing.get_PCA">[docs]</a>    <span class="k">def</span> <span class="nf">get_PCA</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;PCA-analisys&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Performs PCA analysis</span>
 
 <span class="sd">        :param X: matrix with input variables</span>

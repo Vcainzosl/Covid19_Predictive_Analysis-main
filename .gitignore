@@ -9,6 +9,7 @@ __pycache__/
 # Distribution / packaging
 .Python
 doc-generation/
+plantilla_Tex/
 test/
 csv/
 Datasets/
