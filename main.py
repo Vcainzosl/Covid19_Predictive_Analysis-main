@@ -109,6 +109,11 @@ def make_processing(prp, windowsize):
 
 
 def make_postprocessing(filename, **kwargs):
+    """Main function to elaborate the report containing all simulation results
+
+    :param filename: name of the report file
+    :type filename: str
+    """
     pop = Postprocessing(filename, **kwargs)
 
 
@@ -122,4 +127,5 @@ if __name__ == "__main__":
     )
 
     make_processing(prp, [1, 7, 14])
+    # In case it is wanted, with the line below uncommented, a report is generated on the base directory
     # make_postprocessing("report", title="Report", author="Víctor")
