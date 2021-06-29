@@ -128,4 +128,4 @@ if __name__ == "__main__":
 
     make_processing(prp, [1, 7, 14])
     # In case it is wanted, with the line below uncommented, a report is generated on the base directory
-    # make_postprocessing("report", title="Report", author="Víctor")
+    # make_postprocessing("report", title="Report", author="Name")

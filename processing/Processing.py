@@ -328,6 +328,7 @@ class Processing(Saving):
 
         plt.legend()
         plt.xticks(np.arange(1, self.cv + 1))
+        plt.tight_layout()
         # Save output img file
         self.save_img(
             plt,
@@ -351,6 +352,8 @@ class Processing(Saving):
         plt.title("Windowsize_" + str(self.wsize) + ", DNN")
         # Define index with number of epochs
         ind = np.arange(1, self.DNN_optimizing.epochs + 1)
+        plt.xlabel("epochs")
+        plt.ylabel("MSE")
         # Lenght of scores to plot labels
         size = np.arange(len(DNNscores))
         for i, color, point in zip(DNNscores, colors, size):
@@ -376,8 +379,9 @@ class Processing(Saving):
                 bbox=dict(boxstyle="round", fc="0.8"),
             )
         plt.legend()
-        plt.xticks(np.arange(1, self.DNN_optimizing.epochs + 1))
-        # Save output img file
+        plt.xticks(np.arange(0, self.DNN_optimizing.epochs + 1, 2))
+        plt.tight_layout()
+        # Save output img
         self.save_img(plt, "Validation-DNN-windowsize=" + str(self.wsize))
         plt.close()
 
